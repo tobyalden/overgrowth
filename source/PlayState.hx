@@ -1,6 +1,6 @@
 package;
 
-import flixel.FlxState;
+import flixel.*;
 
 class PlayState extends FlxState
 {
@@ -10,6 +10,7 @@ class PlayState extends FlxState
 	{
         player = new Player(20, 20);
         add(player);
+        FlxG.sound.playMusic('assets/music/whitenoise.ogg', 0.1);
 		super.create();
 	}
 
