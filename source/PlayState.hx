@@ -11,7 +11,7 @@ class PlayState extends FlxState
     public static inline var TOTAL_LAYOUTS = 1;
 
     private var player:Player;
-    private var maps:Map<FlxPoint, FlxTilemap>;
+    private var maps:Array<FlxTilemap>;
     private var currentMap:FlxTilemap;
     private var layout:FlxTilemap;
 
@@ -24,7 +24,7 @@ class PlayState extends FlxState
         player = new Player(100, 100);
         add(player);
 
-        maps = new Map<FlxPoint, FlxTilemap>();
+        maps = new Array<FlxTilemap>();
         layout = new FlxTilemap();
         var layoutPath = 'assets/data/layouts/1.png';
         layout.loadMapFromGraphic(
@@ -37,27 +37,23 @@ class PlayState extends FlxState
                     var map = new FlxTilemap();
                     var rand = Math.floor(Math.random() * TOTAL_MAPS);
                     var mapPath = 'assets/data/maps/' + rand + '.png';
-                    //mapPath = 'assets/data/maps/big.png';
-                    trace(mapPath);
                     map.loadMapFromGraphic(
                         mapPath, false, 1, 'assets/images/tiles.png'
                     );
                     map.x = x * map.width;
                     map.y = y * map.height;
-                    maps.set(new FlxPoint(x, y), map);
+                    maps.push(map);
                     add(map);
                 } 
             }
         }
-        FlxG.worldBounds.set(0, 0, 1000, 1000);
+        FlxG.worldBounds.set(0, 0, 1000, 1000); // TODO: FIX
 		super.create();
 	}
 
 	override public function update(elapsed:Float):Void
 	{
-        var iter = maps.iterator();
-        while(iter.hasNext()) {
-            var map = iter.next();
+        for (map in maps) {
             if(FlxG.overlap(player, map)) {
                 currentMap = map;
             }
@@ -66,7 +62,7 @@ class PlayState extends FlxState
         //FlxG.camera.setScrollBoundsRect(
             //currentMap.x, currentMap.y, currentMap.width, currentMap.height
         //);
-        //FlxG.collide(player, currentMap);
+        FlxG.collide(player, currentMap);
         for (bullet in Bullet.all) {
             if(currentMap.overlaps(bullet)) {
                 bullet.destroy();
