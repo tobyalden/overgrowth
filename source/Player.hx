@@ -12,7 +12,7 @@ class Player extends FlxSprite
     public static inline var JUMP_CANCEL_POWER = 100;
     public static inline var GRAVITY = 10;
     public static inline var AIR_ACCEL = 2500;
-    public static inline var TERMINAL_VELOCITY = 200;
+    public static inline var TERMINAL_VELOCITY = 300;
     public static inline var SHOT_COOOLDOWN = 0.25;
 
     private var shotCooldown:FlxTimer;

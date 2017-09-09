@@ -40,6 +40,17 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
         FlxG.collide(player, map);
+        for (bullet in Bullet.all) {
+            if(map.overlaps(bullet)) {
+                bullet.destroy();
+            }
+        }
 		super.update(elapsed);
 	}
+
+    private function destroyBullet(bullet:FlxObject, _:FlxObject) {
+        cast(bullet, Bullet).destroy();
+        return true;
+    }
+
 }
