@@ -47,7 +47,12 @@ class PlayState extends FlxState
                 } 
             }
         }
-        FlxG.worldBounds.set(0, 0, 1000, 1000); // TODO: FIX
+        FlxG.worldBounds.set(
+            0, 0,
+            layout.widthInTiles * FlxG.width,
+            layout.heightInTiles * FlxG.height
+        );
+        currentMap = maps[0];
 		super.create();
 	}
 
@@ -59,9 +64,9 @@ class PlayState extends FlxState
             }
         }
         FlxG.camera.follow(player, LOCKON, 3);
-        //FlxG.camera.setScrollBoundsRect(
-            //currentMap.x, currentMap.y, currentMap.width, currentMap.height
-        //);
+        FlxG.camera.setScrollBoundsRect(
+            currentMap.x, currentMap.y, currentMap.width, currentMap.height
+        );
         FlxG.collide(player, currentMap);
         for (bullet in Bullet.all) {
             if(currentMap.overlaps(bullet)) {
