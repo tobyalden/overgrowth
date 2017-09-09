@@ -8,11 +8,15 @@ import flixel.util.*;
 class Player extends FlxSprite
 {
     public static inline var SPEED = 200;
-    public static inline var JUMP_POWER = 400;
+    public static inline var JUMP_POWER = 300;
     public static inline var BULLET_SPREAD = 30;
+    public static inline var BULLET_KICKBACK_UP = 250;
+    public static inline var BULLET_KICKBACK_SIDE = 200;
     public static inline var JUMP_CANCEL_POWER = 100;
     public static inline var GRAVITY = 10;
-    public static inline var AIR_ACCEL = 2500;
+    public static inline var AIR_ACCEL = 1500;
+    public static inline var GROUND_ACCEL = 2000;
+    public static inline var GROUND_DRAG = 2000;
     public static inline var TERMINAL_VELOCITY = 300;
     public static inline var SHOT_COOLDOWN = 0.5;
 
@@ -71,6 +75,17 @@ class Player extends FlxSprite
             else if(facing == FlxObject.RIGHT) {
                 bulletVelocity.x = Bullet.SPEED;
             }
+            if(bulletVelocity.x < 0) {
+                velocity.x = BULLET_KICKBACK_SIDE;
+            }
+            else if(bulletVelocity.x > 0) {
+                velocity.x = -BULLET_KICKBACK_SIDE;
+            }
+            if (bulletVelocity.y > 0) {
+                velocity.y = Math.min(
+                    -BULLET_KICKBACK_UP, velocity.y - BULLET_KICKBACK_UP/5
+                );
+            }
             for (i in 0...3) {
                 var offset = i - 1;
                 var offsetVelocity = new FlxPoint(
@@ -94,7 +109,7 @@ class Player extends FlxSprite
     {
         if(FlxG.keys.pressed.LEFT) {
             if(isOnGround) {
-                velocity.x = -SPEED;
+                acceleration.x = -GROUND_ACCEL;
             }
             else {
                 acceleration.x = -AIR_ACCEL;
@@ -103,7 +118,7 @@ class Player extends FlxSprite
         }
         else if(FlxG.keys.pressed.RIGHT) {
             if(isOnGround) {
-                velocity.x = SPEED;
+                acceleration.x = GROUND_ACCEL;
             }
             else {
                 acceleration.x = AIR_ACCEL;
@@ -112,16 +127,13 @@ class Player extends FlxSprite
         }
         else {
             if(isOnGround) {
-                velocity.x = 0;
+                acceleration.x = 0;
+                drag.x = GROUND_DRAG;
             }
             else {
                 acceleration.x = 0;
-                drag.x = AIR_ACCEL;
+                drag.x = AIR_ACCEL/2;
             }
-        }
-
-        if(isOnGround) {
-            acceleration.x = 0;
         }
 
         if(FlxG.keys.justPressed.Z && isOnGround) {
