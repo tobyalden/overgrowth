@@ -1,7 +1,9 @@
 package;
 
 import flixel.*;
+import flixel.math.*;
 import flixel.util.*;
+
 
 class Player extends FlxSprite
 {
@@ -27,11 +29,13 @@ class Player extends FlxSprite
 
     private function shooting()
     {
-        trace(shotCooldown.timeLeft);
         if(FlxG.keys.pressed.X && !shotCooldown.active)
         {
             shotCooldown.reset(SHOT_COOOLDOWN);
-            var bullet = new Bullet(Std.int(x + 8), Std.int(y + 8));
+            var bulletVelocity = new FlxPoint(Bullet.SPEED, 0);
+            var bullet = new Bullet(
+                Std.int(x + 8), Std.int(y + 8), bulletVelocity
+            );
             FlxG.state.add(bullet);
         }
     }
