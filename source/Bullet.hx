@@ -8,7 +8,8 @@ import flixel.util.*;
 class Bullet extends FlxSprite
 {
     
-    public static inline var SPEED = 400;
+    public static inline var SPEED = 600;
+    public static inline var GRAVITY = 3;
 
     public static var all:FlxGroup = new FlxGroup();
 
@@ -22,6 +23,7 @@ class Bullet extends FlxSprite
 
     override public function update(elapsed:Float)
     {
+        velocity.y += GRAVITY;
         super.update(elapsed);
     }
 

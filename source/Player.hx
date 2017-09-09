@@ -9,11 +9,12 @@ class Player extends FlxSprite
 {
     public static inline var SPEED = 200;
     public static inline var JUMP_POWER = 400;
+    public static inline var BULLET_SPREAD = 30;
     public static inline var JUMP_CANCEL_POWER = 100;
     public static inline var GRAVITY = 10;
     public static inline var AIR_ACCEL = 2500;
     public static inline var TERMINAL_VELOCITY = 300;
-    public static inline var SHOT_COOOLDOWN = 0.25;
+    public static inline var SHOT_COOLDOWN = 0.5;
 
     private var shotCooldown:FlxTimer;
     private var isOnGround:Bool;
@@ -56,7 +57,7 @@ class Player extends FlxSprite
     {
         if(FlxG.keys.pressed.X && !shotCooldown.active)
         {
-            shotCooldown.reset(SHOT_COOOLDOWN);
+            shotCooldown.reset(SHOT_COOLDOWN);
             var bulletVelocity = new FlxPoint(0, 0);
             if(!isOnGround && isLookingDown) {
                 bulletVelocity.y = Bullet.SPEED;
@@ -70,10 +71,22 @@ class Player extends FlxSprite
             else if(facing == FlxObject.RIGHT) {
                 bulletVelocity.x = Bullet.SPEED;
             }
-            var bullet = new Bullet(
-                Std.int(x + 8), Std.int(y + 8), bulletVelocity
-            );
-            FlxG.state.add(bullet);
+            for (i in 0...3) {
+                var offset = i - 1;
+                var offsetVelocity = new FlxPoint(
+                    bulletVelocity.x, bulletVelocity.y
+                );
+                if(Math.abs(offsetVelocity.x) > Math.abs(offsetVelocity.y)) {
+                    offsetVelocity.y += offset * BULLET_SPREAD;
+                }
+                else {
+                    offsetVelocity.x += offset * BULLET_SPREAD;
+                }
+                var bullet = new Bullet(
+                    Std.int(x + 8), Std.int(y + 8), offsetVelocity
+                );
+                FlxG.state.add(bullet);
+            }
         }
     }
 
