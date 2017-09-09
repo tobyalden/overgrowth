@@ -17,6 +17,8 @@ class Player extends FlxSprite
 
     private var shotCooldown:FlxTimer;
     private var isOnGround:Bool;
+    private var isLookingUp:Bool;
+    private var isLookingDown:Bool;
 
     public function new(x:Int, y:Int)
     {
@@ -35,11 +37,15 @@ class Player extends FlxSprite
         shotCooldown = new FlxTimer();
         shotCooldown.loops = 1;
         isOnGround = false;
+        isLookingUp = false;
+        isLookingDown = false;
     }
 
     override public function update(elapsed:Float)
     {
         isOnGround = isTouching(FlxObject.DOWN);
+        isLookingUp = FlxG.keys.pressed.UP;
+        isLookingDown = FlxG.keys.pressed.DOWN;
         move();
         shoot();
         animate();
@@ -51,9 +57,18 @@ class Player extends FlxSprite
         if(FlxG.keys.pressed.X && !shotCooldown.active)
         {
             shotCooldown.reset(SHOT_COOOLDOWN);
-            var bulletVelocity = new FlxPoint(Bullet.SPEED, 0);
-            if(facing == FlxObject.LEFT) {
+            var bulletVelocity = new FlxPoint(0, 0);
+            if(!isOnGround && isLookingDown) {
+                bulletVelocity.y = Bullet.SPEED;
+            }
+            else if(isLookingUp) {
+                bulletVelocity.y = -Bullet.SPEED;
+            }
+            else if(facing == FlxObject.LEFT) {
                 bulletVelocity.x = -Bullet.SPEED;
+            }
+            else if(facing == FlxObject.RIGHT) {
+                bulletVelocity.x = Bullet.SPEED;
             }
             var bullet = new Bullet(
                 Std.int(x + 8), Std.int(y + 8), bulletVelocity
@@ -111,13 +126,31 @@ class Player extends FlxSprite
     private function animate()
     {
         if(!isOnGround) {
-            animation.play('jump');
+            if (isLookingDown) {
+                animation.play('jump_down');
+            }
+            else if(isLookingUp) {
+                animation.play('jump_up');
+            }
+            else {
+                animation.play('jump');
+            }
         }
         else if(velocity.x != 0) {
-            animation.play('run');
+            if(isLookingUp) {
+                animation.play('run_up');
+            }
+            else {
+                animation.play('run');
+            }
         }
         else {
-            animation.play('idle');
+            if(isLookingUp) {
+                animation.play('up');
+            }
+            else {
+                animation.play('idle');
+            }
         }
     }
 
