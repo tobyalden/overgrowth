@@ -16,6 +16,7 @@ class Player extends FlxSprite
     public static inline var SHOT_COOOLDOWN = 0.25;
 
     private var shotCooldown:FlxTimer;
+    private var isOnGround:Bool;
 
     public function new(x:Int, y:Int)
     {
@@ -33,10 +34,12 @@ class Player extends FlxSprite
         animation.play('idle');
         shotCooldown = new FlxTimer();
         shotCooldown.loops = 1;
+        isOnGround = false;
     }
 
     override public function update(elapsed:Float)
     {
+        isOnGround = isTouching(FlxObject.DOWN);
         move();
         shoot();
         animate();
@@ -62,7 +65,7 @@ class Player extends FlxSprite
     private function move()
     {
         if(FlxG.keys.pressed.LEFT) {
-            if(isTouching(FlxObject.DOWN)) {
+            if(isOnGround) {
                 velocity.x = -SPEED;
             }
             else {
@@ -71,7 +74,7 @@ class Player extends FlxSprite
             facing = FlxObject.LEFT;
         }
         else if(FlxG.keys.pressed.RIGHT) {
-            if(isTouching(FlxObject.DOWN)) {
+            if(isOnGround) {
                 velocity.x = SPEED;
             }
             else {
@@ -80,7 +83,7 @@ class Player extends FlxSprite
             facing = FlxObject.RIGHT;
         }
         else {
-            if(isTouching(FlxObject.DOWN)) {
+            if(isOnGround) {
                 velocity.x = 0;
             }
             else {
@@ -89,14 +92,14 @@ class Player extends FlxSprite
             }
         }
 
-        if(isTouching(FlxObject.DOWN)) {
+        if(isOnGround) {
             acceleration.x = 0;
         }
 
-        if(FlxG.keys.justPressed.Z && isTouching(FlxObject.DOWN)) {
+        if(FlxG.keys.justPressed.Z && isOnGround) {
             velocity.y = -JUMP_POWER;
         }
-        else if(FlxG.keys.justReleased.Z && !isTouching(FlxObject.DOWN)) {
+        else if(FlxG.keys.justReleased.Z && !isOnGround) {
             velocity.y = Math.max(velocity.y, -JUMP_CANCEL_POWER);
         }
 
@@ -107,7 +110,7 @@ class Player extends FlxSprite
 
     private function animate()
     {
-        if(!isTouching(FlxObject.DOWN)) {
+        if(!isOnGround) {
             animation.play('jump');
         }
         else if(velocity.x != 0) {
