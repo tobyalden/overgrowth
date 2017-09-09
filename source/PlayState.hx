@@ -12,20 +12,24 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
         FlxG.state.bgColor = FlxColor.GRAY;
-        player = new Player(20, 20);
+        player = new Player(100, 100);
         add(player);
         map = new FlxTilemap();
         var rand = Math.floor(Math.random() * 12);
         var mapPath = 'assets/data/maps/' + rand + '.png';
+        mapPath = 'assets/data/maps/big.png';
         map.loadMapFromGraphic(
             mapPath, false, 1, 'assets/images/tiles.png'
         );
         add(map);
+        FlxG.worldBounds.set(0, 0, map.width, map.height);
 		super.create();
 	}
 
 	override public function update(elapsed:Float):Void
 	{
+        FlxG.camera.follow(player, LOCKON, 3);
+        FlxG.camera.setScrollBoundsRect(0, 0, map.width, map.height);
         FlxG.collide(player, map);
         for (bullet in Bullet.all) {
             if(map.overlaps(bullet)) {
