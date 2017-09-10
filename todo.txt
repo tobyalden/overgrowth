@@ -1,0 +1,7 @@
+- add endings
+- add multiple levels
+- add start screen
+- add tutorial
+- add enemies
+- add bosses
+- add lives

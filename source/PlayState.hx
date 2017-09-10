@@ -127,8 +127,8 @@ class PlayState extends FlxState
         maps.set([randX, randY].toString(), map);
         currentMap = map;
         player = new Player(
-            Std.int(currentMap.x + currentMap.width/2),
-            Std.int(currentMap.y + currentMap.height/2 - 30)
+            Std.int(currentMap.x + 8 * 16 - 8),
+            Std.int(currentMap.y + 9 * 16 - 24 - 16)
         );
         add(player);
     }
