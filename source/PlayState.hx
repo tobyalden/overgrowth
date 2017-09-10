@@ -74,6 +74,7 @@ class PlayState extends FlxState
             decorateMap(map);
         }
         FlxG.camera.fade(FlxColor.BLACK, 2, true);
+        FlxG.sound.music.fadeOut();
 		super.create();
 	}
 
