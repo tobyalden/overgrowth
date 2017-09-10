@@ -39,7 +39,7 @@ class PlayState extends FlxState
                     var rand = Math.ceil(Math.random() * TOTAL_MAPS);
                     var mapPath = 'assets/data/maps/' + rand + '.png';
                     map.loadMapFromGraphic(
-                        mapPath, false, 1, 'assets/images/tiles.png'
+                        mapPath, false, 1, 'assets/images/tiles.png', 16, 16, AUTO
                     );
                     map.x = x * map.width;
                     map.y = y * map.height;
@@ -89,7 +89,7 @@ class PlayState extends FlxState
         maps.remove([randX, randY].toString());
         var mapPath = 'assets/data/maps/start.png';
         map.loadMapFromGraphic(
-            mapPath, false, 1, 'assets/images/tiles.png'
+            mapPath, false, 1, 'assets/images/tiles.png', 16, 16, AUTO
         );
         map.x = randX * map.width;
         map.y = randY * map.height;
@@ -122,7 +122,8 @@ class PlayState extends FlxState
                     var rand = Math.ceil(Math.random() * TOTAL_BIG_MAPS);
                     var mapPath = 'assets/data/maps/big/' + rand + '.png';
                     map.loadMapFromGraphic(
-                        mapPath, false, 1, 'assets/images/tiles.png'
+                        mapPath, false, 1, 'assets/images/tiles.png', 16, 16,
+                        AUTO
                     );
                     map.x = x * map.width/2;
                     map.y = y * map.height/2;
