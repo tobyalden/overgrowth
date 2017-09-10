@@ -42,6 +42,7 @@ class PlayState extends FlxState
                     );
                     map.x = x * map.width;
                     map.y = y * map.height;
+                    sealMap(x, y, map);
                     maps.push(map);
                     add(map);
                 } 
@@ -55,6 +56,31 @@ class PlayState extends FlxState
         currentMap = maps[0];
 		super.create();
 	}
+
+    private function sealMap(x:Int, y:Int, map:FlxTilemap) {
+        if(x == 0 || layout.getTile(x - 1, y) == 0) {
+            map.setTile(0, 6, 1);
+            map.setTile(0, 7, 1);
+            map.setTile(0, 8, 1);
+        }
+        if(x == layout.widthInTiles - 1 || layout.getTile(x + 1, y) == 0) {
+            map.setTile(map.widthInTiles - 1, 6, 1);
+            map.setTile(map.widthInTiles - 1, 7, 1);
+            map.setTile(map.widthInTiles - 1, 8, 1);
+        }
+        if(y == 0 || layout.getTile(x, y - 1) == 0) {
+            map.setTile(6, 0, 1);
+            map.setTile(7, 0, 1);
+            map.setTile(8, 0, 1);
+            map.setTile(9, 0, 1);
+        }
+        if(y == layout.heightInTiles - 1 || layout.getTile(x, y + 1) == 0) {
+            map.setTile(6, map.heightInTiles - 1, 1);
+            map.setTile(7, map.heightInTiles - 1, 1);
+            map.setTile(8, map.heightInTiles - 1, 1);
+            map.setTile(9, map.heightInTiles - 1, 1);
+        }
+    }
 
 	override public function update(elapsed:Float):Void
 	{
