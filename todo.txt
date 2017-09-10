@@ -1,5 +1,5 @@
 + add start screen
-- add tutorial
++ add tutorial
 - add multiple levels
 - add endings
 - add enemies
