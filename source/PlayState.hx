@@ -261,12 +261,12 @@ class PlayState extends FlxState
             if(FlxG.overlap(player, map)) {
                 currentMap = map;
             }
+            FlxG.collide(player, map);
         }
         FlxG.camera.follow(player, LOCKON, 3);
         FlxG.camera.setScrollBoundsRect(
             currentMap.x, currentMap.y, currentMap.width, currentMap.height
         );
-        FlxG.collide(player, currentMap);
         for (bullet in Bullet.all) {
             if(currentMap.overlaps(bullet)) {
                 bullet.destroy();
