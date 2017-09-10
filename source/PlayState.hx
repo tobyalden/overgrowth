@@ -25,7 +25,7 @@ class PlayState extends FlxState
         maps = new Map<String, FlxTilemap>();
         currentMap = null;
         layout = new FlxTilemap();
-        var layoutRand = Math.floor(Math.random() * TOTAL_LAYOUTS);
+        var layoutRand = Math.ceil(Math.random() * TOTAL_LAYOUTS);
         var layoutPath = 'assets/data/layouts/' + layoutRand + '.png';
         layout.loadMapFromGraphic(
             layoutPath, false, 1, 'assets/images/tiles.png'
@@ -35,7 +35,7 @@ class PlayState extends FlxState
             for (y in 0...layout.heightInTiles) {
                 if(layout.getTile(x, y) == 1) {
                     var map = new FlxTilemap();
-                    var rand = Math.floor(Math.random() * TOTAL_MAPS);
+                    var rand = Math.ceil(Math.random() * TOTAL_MAPS);
                     var mapPath = 'assets/data/maps/' + rand + '.png';
                     map.loadMapFromGraphic(
                         mapPath, false, 1, 'assets/images/tiles.png'
@@ -96,7 +96,7 @@ class PlayState extends FlxState
                     maps.remove([x, y + 1].toString());
                     maps.remove([x + 1, y + 1].toString());
                     var map = new FlxTilemap();
-                    var rand = Math.floor(Math.random() * TOTAL_BIG_MAPS);
+                    var rand = Math.ceil(Math.random() * TOTAL_BIG_MAPS);
                     var mapPath = 'assets/data/maps/big/' + rand + '.png';
                     map.loadMapFromGraphic(
                         mapPath, false, 1, 'assets/images/tiles.png'
