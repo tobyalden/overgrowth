@@ -13,6 +13,7 @@ class PlayState extends FlxState
 
     private var player:Player;
     private var maps:Map<String, FlxTilemap>;
+    private var bigMaps:Map<String, FlxTilemap>;
     private var currentMap:FlxTilemap;
     private var layout:FlxTilemap;
 
@@ -23,7 +24,7 @@ class PlayState extends FlxState
 	{
         FlxG.state.bgColor = FlxColor.GRAY;
         maps = new Map<String, FlxTilemap>();
-        currentMap = null;
+        bigMaps = new Map<String, FlxTilemap>();
         layout = new FlxTilemap();
         var layoutRand = Math.ceil(Math.random() * TOTAL_LAYOUTS);
         var layoutPath = 'assets/data/layouts/' + layoutRand + '.png';
@@ -49,6 +50,7 @@ class PlayState extends FlxState
         }
 
         addBigMap();
+        addStart();
 
         FlxG.worldBounds.set(
             0, 0,
@@ -59,15 +61,7 @@ class PlayState extends FlxState
         while(iter.hasNext()) {
             var map = iter.next(); 
             add(map);
-            if (currentMap == null) {
-                currentMap = map;
-            }
         }
-        player = new Player(
-            Std.int(currentMap.x + 50),
-            Std.int(currentMap.y + 50)
-        );
-        add(player);
 		super.create();
 	}
 
@@ -78,6 +72,35 @@ class PlayState extends FlxState
             && y >= 0
             && y < tilemap.heightInTiles
         );
+    }
+
+    private function addStart()
+    {
+        var randX = Math.floor(Math.random() * layout.widthInTiles);
+        var randY = Math.floor(Math.random() * layout.heightInTiles);
+        while(
+            layout.getTile(randX, randY) == 0
+            || bigMaps.exists([randX, randY].toString())
+        ) {
+            randX = Math.floor(Math.random() * layout.widthInTiles);
+            randY = Math.floor(Math.random() * layout.heightInTiles);
+        }
+        var map = new FlxTilemap();
+        maps.remove([randX, randY].toString());
+        var mapPath = 'assets/data/maps/start.png';
+        map.loadMapFromGraphic(
+            mapPath, false, 1, 'assets/images/tiles.png'
+        );
+        map.x = randX * map.width;
+        map.y = randY * map.height;
+        sealMap(randX, randY, map);
+        maps.set([randX, randY].toString(), map);
+        currentMap = map;
+        player = new Player(
+            Std.int(currentMap.x + currentMap.width/2),
+            Std.int(currentMap.y + currentMap.height/2 - 30)
+        );
+        add(player);
     }
 
     private function addBigMap()
@@ -105,6 +128,10 @@ class PlayState extends FlxState
                     map.y = y * map.height/2;
                     sealBigMap(x, y, map);
                     maps.set([x, y].toString(), map);
+                    bigMaps.set([x, y].toString(), map);
+                    bigMaps.set([x + 1, y].toString(), map);
+                    bigMaps.set([x, y + 1].toString(), map);
+                    bigMaps.set([x + 1, y + 1].toString(), map);
                     return;
                 }
             }
