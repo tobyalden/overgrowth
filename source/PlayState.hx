@@ -8,6 +8,7 @@ import flixel.util.*;
 class PlayState extends FlxState
 {
     public static inline var TOTAL_MAPS = 12;
+    public static inline var TOTAL_BIG_MAPS = 3;
     public static inline var TOTAL_LAYOUTS = 10;
 
     private var player:Player;
@@ -95,7 +96,8 @@ class PlayState extends FlxState
                     maps.remove([x, y + 1].toString());
                     maps.remove([x + 1, y + 1].toString());
                     var map = new FlxTilemap();
-                    var mapPath = 'assets/data/maps/big.png';
+                    var rand = Math.floor(Math.random() * TOTAL_BIG_MAPS);
+                    var mapPath = 'assets/data/maps/big/' + rand + '.png';
                     map.loadMapFromGraphic(
                         mapPath, false, 1, 'assets/images/tiles.png'
                     );
