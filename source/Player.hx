@@ -8,12 +8,12 @@ import flixel.util.*;
 class Player extends FlxSprite
 {
     public static inline var SPEED = 150;
-    public static inline var JUMP_POWER = 300;
+    public static inline var JUMP_POWER = 330;
     public static inline var BULLET_SPREAD = 30;
-    public static inline var BULLET_KICKBACK_UP = 250;
+    public static inline var BULLET_KICKBACK_UP = 260;
     public static inline var BULLET_KICKBACK_SIDE = 200;
     public static inline var JUMP_CANCEL_POWER = 100;
-    public static inline var GRAVITY = 10;
+    public static inline var GRAVITY = 12;
     public static inline var AIR_ACCEL = 1500;
     public static inline var GROUND_ACCEL = 2000;
     public static inline var GROUND_DRAG = 2000;
