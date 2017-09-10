@@ -1,6 +1,7 @@
 package;
 
 import flixel.*;
+import flixel.addons.display.*;
 import flixel.math.*;
 import flixel.tile.*;
 import flixel.util.*;
@@ -10,6 +11,7 @@ class PlayState extends FlxState
     public static inline var TOTAL_MAPS = 12;
     public static inline var TOTAL_BIG_MAPS = 3;
     public static inline var TOTAL_LAYOUTS = 10;
+    public static inline var TOTAL_BACKGROUNDS = 6;
 
     private var player:Player;
     private var maps:Map<String, FlxTilemap>;
@@ -22,7 +24,15 @@ class PlayState extends FlxState
 
 	override public function create():Void
 	{
-        FlxG.state.bgColor = FlxColor.GRAY;
+        var randBackground = Math.ceil(Math.random() * TOTAL_BACKGROUNDS);
+        var backdrop = new FlxBackdrop(
+            'assets/images/backgrounds/' + randBackground + '.png'
+        );
+        add(backdrop);
+        var light = new FlxBackdrop(
+            'assets/images/backgrounds/light.png', 0.75, 0.75
+        );
+        add(light);
         maps = new Map<String, FlxTilemap>();
         bigMaps = new Map<String, FlxTilemap>();
         layout = new FlxTilemap();
