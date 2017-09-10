@@ -127,6 +127,7 @@ class PlayState extends FlxState
         sealMap(randX, randY, map);
         maps.set([randX, randY].toString(), map);
         currentMap = map;
+        add(new Tutorial(Std.int(currentMap.x), Std.int(currentMap.y)));
         player = new Player(
             Std.int(currentMap.x + 8 * 16 - 8),
             Std.int(currentMap.y + 9 * 16 - 24 - 16)
