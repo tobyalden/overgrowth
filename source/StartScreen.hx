@@ -17,7 +17,10 @@ class StartScreen extends FlxState
 
 	override public function update(elapsed:Float):Void {
         if(FlxG.keys.justPressed.Z || FlxG.keys.justPressed.X) {
-            FlxG.switchState(new PlayState());
+            FlxG.camera.fade(FlxColor.BLACK, 0.33, false, function()
+            {
+                FlxG.switchState(new PlayState());
+            });
         }
         super.update(elapsed);
     }

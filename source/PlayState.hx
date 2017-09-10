@@ -73,6 +73,7 @@ class PlayState extends FlxState
             add(map);
             decorateMap(map);
         }
+        FlxG.camera.fade(FlxColor.BLACK, 2, true);
 		super.create();
 	}
 

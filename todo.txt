@@ -1,7 +1,9 @@
 - add endings
 - add multiple levels
-- add start screen
++ add start screen
 - add tutorial
 - add enemies
 - add bosses
 - add lives
+- add sfx
+- add music
