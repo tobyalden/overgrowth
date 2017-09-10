@@ -78,12 +78,18 @@ class PlayState extends FlxState
 
     private function decorateMap(map:FlxTilemap) {
         for (x in 0...map.widthInTiles) {
-            for (y in 1...map.heightInTiles) {
-                //trace(map.getTile(x, y));
-                if(map.getTile(x, y) > 0 && map.getTile(x, y - 1) == 0) {
+            for (y in 0...map.heightInTiles) {
+                if(map.getTile(x, y) > 0 && inBounds(x, y - 1, map) && map.getTile(x, y - 1) == 0) {
                     add(new Grass(
                         Std.int(map.x + x * 16), Std.int(map.y + y * 16 - 32)
                     ));
+                }
+                else if(map.getTile(x, y) > 0 && inBounds(x, y + 1, map) && map.getTile(x, y + 1) == 0) {
+                    if(Math.random() > 0.6) {
+                        add(new Vines(
+                            Std.int(map.x + x * 16), Std.int(map.y + y * 16 + 16)
+                        ));
+                    }
                 }
             }
         }
