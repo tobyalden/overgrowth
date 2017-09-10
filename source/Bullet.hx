@@ -29,6 +29,7 @@ class Bullet extends FlxSprite
 
     override public function destroy()
     {
+        FlxG.state.add(new Explosion(this));
         all.remove(this);
         super.destroy();
     }
