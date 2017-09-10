@@ -71,9 +71,23 @@ class PlayState extends FlxState
         while(iter.hasNext()) {
             var map = iter.next(); 
             add(map);
+            decorateMap(map);
         }
 		super.create();
 	}
+
+    private function decorateMap(map:FlxTilemap) {
+        for (x in 0...map.widthInTiles) {
+            for (y in 1...map.heightInTiles) {
+                //trace(map.getTile(x, y));
+                if(map.getTile(x, y) > 0 && map.getTile(x, y - 1) == 0) {
+                    add(new Grass(
+                        Std.int(map.x + x * 16), Std.int(map.y + y * 16 - 32)
+                    ));
+                }
+            }
+        }
+    }
 
     private function inBounds(x:Int, y:Int, tilemap:FlxTilemap) {
         return (
