@@ -18,6 +18,8 @@ class PlayState extends FlxState
     private var bigMaps:Map<String, FlxTilemap>;
     private var currentMap:FlxTilemap;
     private var layout:FlxTilemap;
+    private var startKey:Array<Int>;
+    private var exitKey:Array<Int>;
 
     private var worldWidth:Int;
     private var worldHeight:Int;
@@ -60,6 +62,7 @@ class PlayState extends FlxState
         }
 
         addBigMap();
+        addExit();
         addStart();
 
         FlxG.worldBounds.set(
@@ -113,6 +116,7 @@ class PlayState extends FlxState
         while(
             layout.getTile(randX, randY) == 0
             || bigMaps.exists([randX, randY].toString())
+            || [randX, randY].toString() == exitKey.toString()
         ) {
             randX = Math.floor(Math.random() * layout.widthInTiles);
             randY = Math.floor(Math.random() * layout.heightInTiles);
@@ -126,7 +130,8 @@ class PlayState extends FlxState
         map.x = randX * map.width;
         map.y = randY * map.height;
         sealMap(randX, randY, map);
-        maps.set([randX, randY].toString(), map);
+        startKey = [randX, randY];
+        maps.set(startKey.toString(), map);
         currentMap = map;
         add(new Tutorial(Std.int(currentMap.x), Std.int(currentMap.y)));
         player = new Player(
@@ -134,6 +139,35 @@ class PlayState extends FlxState
             Std.int(currentMap.y + 9 * 16 - 24 - 16)
         );
         add(player);
+    }
+
+    private function addExit()
+    {
+        var randX = Math.floor(Math.random() * layout.widthInTiles);
+        var randY = Math.floor(Math.random() * layout.heightInTiles);
+        while(
+            layout.getTile(randX, randY) == 0
+            || bigMaps.exists([randX, randY].toString())
+        ) {
+            randX = Math.floor(Math.random() * layout.widthInTiles);
+            randY = Math.floor(Math.random() * layout.heightInTiles);
+        }
+        var map = new FlxTilemap();
+        maps.remove([randX, randY].toString());
+        var mapPath = 'assets/data/maps/start.png';
+        map.loadMapFromGraphic(
+            mapPath, false, 1, 'assets/images/tiles.png', 16, 16, AUTO
+        );
+        map.x = randX * map.width;
+        map.y = randY * map.height;
+        sealMap(randX, randY, map);
+        exitKey = [randX, randY];
+        maps.set(exitKey.toString(), map);
+        var door = new Door(
+            Std.int(map.x + 8 * 16 - 16),
+            Std.int(map.y + 9 * 16 - 32)
+        );
+        add(door);
     }
 
     private function addBigMap()
