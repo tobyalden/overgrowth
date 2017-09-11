@@ -1,9 +1,10 @@
 + add start screen
 + add tutorial
-- add multiple levels
-- add endings
-- add enemies
-- add bosses
-- add lives
-- add sfx
-- add music
++ add multiple levels
+
+- add enemies (mon)
+- add lives (tues)
+- add sfx (tues)
+- add music (tues)
+- add bosses (weds)
+- add endings (thurs)

@@ -3,6 +3,7 @@ package;
 import flixel.*;
 import flixel.group.*;
 import flixel.math.*;
+import flixel.system.*;
 import flixel.util.*;
 
 class Bullet extends FlxSprite
@@ -10,6 +11,7 @@ class Bullet extends FlxSprite
     
     public static inline var SPEED = 600;
     public static inline var GRAVITY = 3;
+    private var hitSfx:FlxSound;
 
     public static var all:FlxGroup = new FlxGroup();
 
@@ -19,6 +21,8 @@ class Bullet extends FlxSprite
         this.velocity = velocity;
         makeGraphic(4, 4, FlxColor.WHITE);
         all.add(this);
+        hitSfx = FlxG.sound.load('assets/sounds/hit.wav');
+        hitSfx.volume = 0.33;
     }
 
     override public function update(elapsed:Float)
@@ -30,6 +34,7 @@ class Bullet extends FlxSprite
     override public function destroy()
     {
         FlxG.state.add(new Explosion(this));
+        hitSfx.play(true);
         all.remove(this);
         super.destroy();
     }

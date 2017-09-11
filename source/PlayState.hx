@@ -22,6 +22,7 @@ class PlayState extends FlxState
     private var layout:FlxTilemap;
     private var startKey:Array<Int>;
     private var exitKey:Array<Int>;
+    private var keyKey:Array<Int>;
     private var isFadingOut:Bool;
 
     private var worldWidth:Int;
@@ -143,7 +144,8 @@ class PlayState extends FlxState
         map.x = randX * map.width;
         map.y = randY * map.height;
         sealMap(randX, randY, map);
-        maps.set([randX, randY].toString(), map);
+        keyKey = [randX, randY];
+        maps.set(keyKey.toString(), map);
         key = new Key(
             Std.int(map.x + 8 * 16 - 8),
             Std.int(map.y + 9 * 16 - 24 - 16)

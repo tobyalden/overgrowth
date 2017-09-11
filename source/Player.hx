@@ -2,6 +2,7 @@ package;
 
 import flixel.*;
 import flixel.math.*;
+import flixel.system.*;
 import flixel.util.*;
 
 
@@ -9,7 +10,7 @@ class Player extends FlxSprite
 {
     public static inline var SPEED = 150;
     public static inline var JUMP_POWER = 330;
-    public static inline var BULLET_SPREAD = 30;
+    public static inline var BULLET_SPREAD = 45;
     public static inline var BULLET_KICKBACK_UP = 260;
     public static inline var BULLET_KICKBACK_SIDE = 200;
     public static inline var JUMP_CANCEL_POWER = 100;
@@ -24,6 +25,9 @@ class Player extends FlxSprite
     private var isOnGround:Bool;
     private var isLookingUp:Bool;
     private var isLookingDown:Bool;
+
+    private var runSfx:FlxSound;
+    private var shootSfx:FlxSound;
 
     public function new(x:Int, y:Int)
     {
@@ -44,6 +48,10 @@ class Player extends FlxSprite
         isOnGround = false;
         isLookingUp = false;
         isLookingDown = false;
+        runSfx = FlxG.sound.load('assets/sounds/runloop.wav');
+        shootSfx = FlxG.sound.load('assets/sounds/shoot.wav');
+        runSfx.looped = true;
+        runSfx.volume = 0.5;
     }
 
     override public function update(elapsed:Float)
@@ -54,7 +62,18 @@ class Player extends FlxSprite
         move();
         shoot();
         animate();
+        sound();
         super.update(elapsed);
+    }
+
+    private function sound()
+    {
+        if(animation.name == 'run') {
+            runSfx.play();
+        }
+        else {
+            runSfx.stop();
+        }
     }
 
     private function shoot()
@@ -62,6 +81,7 @@ class Player extends FlxSprite
         if(FlxG.keys.pressed.X && !shotCooldown.active)
         {
             shotCooldown.reset(SHOT_COOLDOWN);
+            shootSfx.play(true);
             var bulletVelocity = new FlxPoint(0, 0);
             if(!isOnGround && isLookingDown) {
                 bulletVelocity.y = Bullet.SPEED;
