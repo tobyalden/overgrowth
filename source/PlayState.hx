@@ -22,12 +22,14 @@ class PlayState extends FlxState
     private var layout:FlxTilemap;
     private var startKey:Array<Int>;
     private var exitKey:Array<Int>;
+    private var isFadingOut:Bool;
 
     private var worldWidth:Int;
     private var worldHeight:Int;
 
 	override public function create():Void
 	{
+        isFadingOut = false;
         var randBackground = Math.ceil(Math.random() * TOTAL_BACKGROUNDS);
         var backdrop = new FlxBackdrop(
             'assets/images/backgrounds/' + randBackground + '.png'
@@ -147,7 +149,7 @@ class PlayState extends FlxState
         var randX = Math.floor(Math.random() * layout.widthInTiles);
         var randY = Math.floor(Math.random() * layout.heightInTiles);
         while(
-            layout.getTile(randX, randY) == 0
+            !maps.exists([randX, randY].toString())
             || bigMaps.exists([randX, randY].toString())
             || [randX, randY].toString() == exitKey.toString()
         ) {
@@ -179,7 +181,7 @@ class PlayState extends FlxState
         var randX = Math.floor(Math.random() * layout.widthInTiles);
         var randY = Math.floor(Math.random() * layout.heightInTiles);
         while(
-            layout.getTile(randX, randY) == 0
+            !maps.exists([randX, randY].toString())
             || bigMaps.exists([randX, randY].toString())
         ) {
             randX = Math.floor(Math.random() * layout.widthInTiles);
@@ -345,6 +347,11 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float):Void
 	{
+        if(isFadingOut) {
+            player.moves = false;
+            super.update(elapsed);
+            return;
+        }
         var iter = maps.iterator();
         while(iter.hasNext()) {
             var map = iter.next();
@@ -365,6 +372,13 @@ class PlayState extends FlxState
         if(FlxG.overlap(player, key)) {
             door.animation.play('open');
             key.destroy();
+        }
+        if(FlxG.overlap(player, door) && door.animation.name == 'open') {
+            FlxG.camera.fade(FlxColor.BLACK, 2.5, false, function()
+            {
+                FlxG.switchState(new PlayState());
+            }, true);
+            isFadingOut = true;
         }
 		super.update(elapsed);
 	}
