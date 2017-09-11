@@ -27,6 +27,13 @@ class PlayState extends FlxState
     private var worldWidth:Int;
     private var worldHeight:Int;
 
+    private var depth:Int;
+
+    public function new(depth:Int) {
+        super();
+        this.depth = depth;
+    }
+
 	override public function create():Void
 	{
         isFadingOut = false;
@@ -168,7 +175,9 @@ class PlayState extends FlxState
         startKey = [randX, randY];
         maps.set(startKey.toString(), map);
         currentMap = map;
-        add(new Tutorial(Std.int(currentMap.x), Std.int(currentMap.y)));
+        if(depth == 1) {
+            add(new Tutorial(Std.int(currentMap.x), Std.int(currentMap.y)));
+        }
         player = new Player(
             Std.int(currentMap.x + 8 * 16 - 8),
             Std.int(currentMap.y + 9 * 16 - 24 - 16)
@@ -376,7 +385,7 @@ class PlayState extends FlxState
         if(FlxG.overlap(player, door) && door.animation.name == 'open') {
             FlxG.camera.fade(FlxColor.BLACK, 2.5, false, function()
             {
-                FlxG.switchState(new PlayState());
+                FlxG.switchState(new PlayState(depth + 1));
             }, true);
             isFadingOut = true;
         }
