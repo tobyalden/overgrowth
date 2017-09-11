@@ -385,6 +385,7 @@ class PlayState extends FlxState
             key.destroy();
         }
         if(FlxG.overlap(player, door) && door.animation.name == 'open') {
+            door.leaveSfx.play();
             FlxG.camera.fade(FlxColor.BLACK, 2.5, false, function()
             {
                 FlxG.switchState(new PlayState(depth + 1));
