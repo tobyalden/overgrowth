@@ -14,6 +14,8 @@ class PlayState extends FlxState
     public static inline var TOTAL_BACKGROUNDS = 6;
 
     private var player:Player;
+    private var key:Key;
+    private var door:Door;
     private var maps:Map<String, FlxTilemap>;
     private var bigMaps:Map<String, FlxTilemap>;
     private var currentMap:FlxTilemap;
@@ -64,6 +66,7 @@ class PlayState extends FlxState
         addBigMap();
         addExit();
         addStart();
+        addKey();
 
         FlxG.worldBounds.set(
             0, 0,
@@ -107,6 +110,36 @@ class PlayState extends FlxState
             && y >= 0
             && y < tilemap.heightInTiles
         );
+    }
+
+    private function addKey()
+    {
+        var randX = Math.floor(Math.random() * layout.widthInTiles);
+        var randY = Math.floor(Math.random() * layout.heightInTiles);
+        while(
+            !maps.exists([randX, randY].toString())
+            || bigMaps.exists([randX, randY].toString())
+            || [randX, randY].toString() == exitKey.toString()
+            || [randX, randY].toString() == startKey.toString()
+        ) {
+            randX = Math.floor(Math.random() * layout.widthInTiles);
+            randY = Math.floor(Math.random() * layout.heightInTiles);
+        }
+        var map = new FlxTilemap();
+        maps.remove([randX, randY].toString());
+        var mapPath = 'assets/data/maps/start.png';
+        map.loadMapFromGraphic(
+            mapPath, false, 1, 'assets/images/tiles.png', 16, 16, AUTO
+        );
+        map.x = randX * map.width;
+        map.y = randY * map.height;
+        sealMap(randX, randY, map);
+        maps.set([randX, randY].toString(), map);
+        key = new Key(
+            Std.int(map.x + 8 * 16 - 8),
+            Std.int(map.y + 9 * 16 - 24 - 16)
+        );
+        add(key);
     }
 
     private function addStart()
@@ -163,7 +196,7 @@ class PlayState extends FlxState
         sealMap(randX, randY, map);
         exitKey = [randX, randY];
         maps.set(exitKey.toString(), map);
-        var door = new Door(
+        door = new Door(
             Std.int(map.x + 8 * 16 - 16),
             Std.int(map.y + 9 * 16 - 32)
         );
@@ -328,6 +361,10 @@ class PlayState extends FlxState
             if(currentMap.overlaps(bullet)) {
                 bullet.destroy();
             }
+        }
+        if(FlxG.overlap(player, key)) {
+            door.animation.play('open');
+            key.destroy();
         }
 		super.update(elapsed);
 	}
