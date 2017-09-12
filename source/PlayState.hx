@@ -77,6 +77,7 @@ class PlayState extends FlxState
         addExit();
         addStart();
         addKey();
+        addEnemies();
 
         FlxG.worldBounds.set(
             0, 0,
@@ -151,6 +152,42 @@ class PlayState extends FlxState
             Std.int(map.y + 9 * 16 - 24 - 16)
         );
         add(key);
+    }
+
+    private function getRandomEmptyMap()
+    {
+        var randX = Math.floor(Math.random() * layout.widthInTiles);
+        var randY = Math.floor(Math.random() * layout.heightInTiles);
+        while(
+            !maps.exists([randX, randY].toString())
+            || bigMaps.exists([randX, randY].toString())
+            || [randX, randY].toString() == exitKey.toString()
+            || [randX, randY].toString() == startKey.toString()
+            || [randX, randY].toString() == keyKey.toString()
+        ) {
+            randX = Math.floor(Math.random() * layout.widthInTiles);
+            randY = Math.floor(Math.random() * layout.heightInTiles);
+        }
+        return maps.get([randX, randY].toString());
+    }
+
+    private function addEnemies()
+    {
+        var map = getRandomEmptyMap();
+        var randX = Math.floor(Math.random() * map.widthInTiles);
+        var randY = Math.floor(Math.random() * map.heightInTiles);
+        while(
+            map.getTile(randX, randY) != 0
+            || randX < 3 || randX > map.widthInTiles - 3
+            || randY < 3 || randY > map.widthInTiles - 3
+        ) {
+            randX = Math.floor(Math.random() * map.widthInTiles);
+            randY = Math.floor(Math.random() * map.heightInTiles);
+        }
+        var enemy = new Enemy(
+            Std.int(map.x + randX * 16), Std.int(map.y + randY * 16)
+        );
+        add(enemy);
     }
 
     private function addStart()
