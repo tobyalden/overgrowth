@@ -182,8 +182,8 @@ class PlayState extends FlxState
             var randY = Math.floor(Math.random() * map.heightInTiles);
             while(
                 map.getTile(randX, randY) != 0
-                || randX < 3 || randX > map.widthInTiles - 3
-                || randY < 3 || randY > map.widthInTiles - 3
+                || randX < 5 || randX > map.widthInTiles - 5
+                || randY < 5 || randY > map.widthInTiles - 5
             ) {
                 randX = Math.floor(Math.random() * map.widthInTiles);
                 randY = Math.floor(Math.random() * map.heightInTiles);
