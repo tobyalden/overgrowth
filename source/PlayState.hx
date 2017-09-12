@@ -12,6 +12,7 @@ class PlayState extends FlxState
     public static inline var TOTAL_BIG_MAPS = 3;
     public static inline var TOTAL_LAYOUTS = 10;
     public static inline var TOTAL_BACKGROUNDS = 6;
+    public static inline var BASE_ENEMY_COUNT = 6;
 
     private var player:Player;
     private var key:Key;
@@ -29,10 +30,12 @@ class PlayState extends FlxState
     private var worldHeight:Int;
 
     private var depth:Int;
+    private var enemyCount:Int;
 
     public function new(depth:Int) {
         super();
         this.depth = depth;
+        enemyCount = BASE_ENEMY_COUNT + depth * 2;
     }
 
 	override public function create():Void
@@ -173,21 +176,23 @@ class PlayState extends FlxState
 
     private function addEnemies()
     {
-        var map = getRandomEmptyMap();
-        var randX = Math.floor(Math.random() * map.widthInTiles);
-        var randY = Math.floor(Math.random() * map.heightInTiles);
-        while(
-            map.getTile(randX, randY) != 0
-            || randX < 3 || randX > map.widthInTiles - 3
-            || randY < 3 || randY > map.widthInTiles - 3
-        ) {
-            randX = Math.floor(Math.random() * map.widthInTiles);
-            randY = Math.floor(Math.random() * map.heightInTiles);
+        for(i in 0...enemyCount) {
+            var map = getRandomEmptyMap();
+            var randX = Math.floor(Math.random() * map.widthInTiles);
+            var randY = Math.floor(Math.random() * map.heightInTiles);
+            while(
+                map.getTile(randX, randY) != 0
+                || randX < 3 || randX > map.widthInTiles - 3
+                || randY < 3 || randY > map.widthInTiles - 3
+            ) {
+                randX = Math.floor(Math.random() * map.widthInTiles);
+                randY = Math.floor(Math.random() * map.heightInTiles);
+            }
+            var enemy = new Enemy(
+                Std.int(map.x + randX * 16), Std.int(map.y + randY * 16), player
+            );
+            add(enemy);
         }
-        var enemy = new Enemy(
-            Std.int(map.x + randX * 16), Std.int(map.y + randY * 16)
-        );
-        add(enemy);
     }
 
     private function addStart()
@@ -407,6 +412,8 @@ class PlayState extends FlxState
                 currentMap = map;
             }
             FlxG.collide(player, map);
+            FlxG.collide(Enemy.all, map);
+            FlxG.collide(Enemy.all, Enemy.all);
         }
         FlxG.camera.follow(player, LOCKON, 3);
         FlxG.camera.setScrollBoundsRect(
