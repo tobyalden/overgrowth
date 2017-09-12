@@ -444,7 +444,17 @@ class PlayState extends FlxState
 
     private function killPlayer() {
         player.kill();
+        new FlxTimer().start(2,
+            function fadeToStart(_:FlxTimer) {
+                FlxG.camera.fade(FlxColor.BLACK, 3, false, function()
+                {
+                    FlxG.switchState(new StartScreen());
+                }, true);
+            }
+        , 1);
     }
+
+
 
     private function destroyBullet(bullet:FlxObject, _:FlxObject) {
         cast(bullet, Bullet).destroy();
