@@ -9,11 +9,13 @@ class Enemy extends FlxSprite
 {
     public static inline var ACTIVE_RADIUS = 140;
     public static inline var SPEED = 40;
-    public static inline var STARTING_HEALTH = 3;
+    public static inline var ACCELERATION = 5000;
+    public static inline var STARTING_HEALTH = 40;
 
     static public var all:FlxGroup = new FlxGroup();
 
     private var isActive:Bool;
+    private var reelTimer:FlxTimer;
     private var player:Player;
 
     public function new(x:Int, y:Int, player:Player) {
@@ -25,6 +27,8 @@ class Enemy extends FlxSprite
         isActive = false;
         all.add(this);
         health = STARTING_HEALTH;
+        reelTimer = new FlxTimer();
+        reelTimer.loops = 1;
     }
 
     override public function update(elapsed:Float)
@@ -33,10 +37,15 @@ class Enemy extends FlxSprite
             kill();
         }
         if(isActive) {
-            FlxVelocity.moveTowardsObject(this, player, SPEED);
-            //FlxMath.accelerateTowardsObject(
-                //this, player, ACCELERATION, MAX_SPEED
-            //);
+            if(!reelTimer.active) {
+                FlxVelocity.accelerateTowardsObject(
+                    this, player, ACCELERATION, SPEED
+                );
+            }
+            else {
+                //acceleration.x = 0;
+                //acceleration.y = 0;
+            }
         }
         else {
             isActive = FlxMath.distanceBetween(this, player) < ACTIVE_RADIUS;
@@ -45,6 +54,12 @@ class Enemy extends FlxSprite
         }
         super.update(elapsed);
     }
+
+    public function takeHit(bullet:FlxObject) {
+        health -= 1;
+        reelTimer.start(0.2);
+    }
+
 
     override public function kill() {
         FlxG.state.add(new Explosion(this));

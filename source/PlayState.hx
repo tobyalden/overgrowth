@@ -426,7 +426,11 @@ class PlayState extends FlxState
         FlxG.overlap(
             Enemy.all, Bullet.all,
             function(enemy:FlxObject, bullet:FlxObject) {
-                enemy.health -= 1;
+                cast(enemy, Enemy).takeHit(bullet);
+                enemy.velocity.x = bullet.velocity.x * 3;
+                enemy.velocity.y = bullet.velocity.y * 3;
+                enemy.acceleration.x = bullet.acceleration.x * 3;
+                enemy.acceleration.y = bullet.acceleration.y * 3;
                 bullet.destroy();
             } 
         );
