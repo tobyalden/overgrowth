@@ -41,6 +41,7 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
         isFadingOut = false;
+        player = new Player(0, 0);
         var randBackground = Math.ceil(Math.random() * TOTAL_BACKGROUNDS);
         var backdrop = new FlxBackdrop(
             'assets/images/backgrounds/' + randBackground + '.png'
@@ -222,10 +223,8 @@ class PlayState extends FlxState
         if(depth == 1) {
             add(new Tutorial(Std.int(currentMap.x), Std.int(currentMap.y)));
         }
-        player = new Player(
-            Std.int(currentMap.x + 8 * 16 - 8),
-            Std.int(currentMap.y + 9 * 16 - 24 - 16)
-        );
+        player.x = Std.int(currentMap.x + 8 * 16 - 8);
+        player.y = Std.int(currentMap.y + 9 * 16 - 24 - 16);
         add(player);
     }
 
@@ -288,6 +287,33 @@ class PlayState extends FlxState
                     bigMaps.set([x + 1, y].toString(), map);
                     bigMaps.set([x, y + 1].toString(), map);
                     bigMaps.set([x + 1, y + 1].toString(), map);
+
+                    for(i in 0...enemyCount) {
+                        var randX = Math.floor(
+                            Math.random() * map.widthInTiles
+                        );
+                        var randY = Math.floor(
+                            Math.random() * map.heightInTiles
+                        );
+                        while(
+                            map.getTile(randX, randY) != 0
+                            || randX < 5 || randX > map.widthInTiles - 5
+                            || randY < 5 || randY > map.widthInTiles - 5
+                        ) {
+                            randX = Math.floor(
+                                Math.random() * map.widthInTiles
+                            );
+                            randY = Math.floor(
+                                Math.random() * map.heightInTiles
+                            );
+                        }
+                        var enemy = new Enemy(
+                            Std.int(map.x + randX * 16),
+                            Std.int(map.y + randY * 16), player
+                        );
+                        add(enemy);
+                    }
+
                     return;
                 }
             }
