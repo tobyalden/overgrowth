@@ -41,4 +41,9 @@ class Enemy extends FlxSprite
         super.update(elapsed);
     }
 
+    override public function kill() {
+        FlxG.state.add(new Explosion(this));
+        super.kill();
+    }
+
 }

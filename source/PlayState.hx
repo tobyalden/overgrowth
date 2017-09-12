@@ -413,7 +413,6 @@ class PlayState extends FlxState
             }
             FlxG.collide(player, map);
             FlxG.collide(Enemy.all, map);
-            FlxG.collide(Enemy.all, Enemy.all);
         }
         FlxG.camera.follow(player, LOCKON, 3);
         FlxG.camera.setScrollBoundsRect(
@@ -423,6 +422,10 @@ class PlayState extends FlxState
             if(currentMap.overlaps(bullet)) {
                 bullet.destroy();
             }
+        }
+        FlxG.collide(Enemy.all, Enemy.all);
+        if(FlxG.overlap(player, Enemy.all)) {
+            killPlayer();
         }
         if(FlxG.overlap(player, key)) {
             door.animation.play('open');
@@ -438,6 +441,10 @@ class PlayState extends FlxState
         }
 		super.update(elapsed);
 	}
+
+    private function killPlayer() {
+        player.kill();
+    }
 
     private function destroyBullet(bullet:FlxObject, _:FlxObject) {
         cast(bullet, Bullet).destroy();

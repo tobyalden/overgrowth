@@ -199,4 +199,9 @@ class Player extends FlxSprite
         }
     }
 
+    override public function kill() {
+        FlxG.state.add(new Explosion(this));
+        super.kill();
+    }
+
 }
