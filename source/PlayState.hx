@@ -423,6 +423,13 @@ class PlayState extends FlxState
                 bullet.destroy();
             }
         }
+        FlxG.overlap(
+            Enemy.all, Bullet.all,
+            function(enemy:FlxObject, bullet:FlxObject) {
+                enemy.health -= 1;
+                bullet.destroy();
+            } 
+        );
         FlxG.collide(Enemy.all, Enemy.all);
         if(FlxG.overlap(player, Enemy.all)) {
             killPlayer();

@@ -9,6 +9,7 @@ class Enemy extends FlxSprite
 {
     public static inline var ACTIVE_RADIUS = 140;
     public static inline var SPEED = 40;
+    public static inline var STARTING_HEALTH = 3;
 
     static public var all:FlxGroup = new FlxGroup();
 
@@ -23,10 +24,14 @@ class Enemy extends FlxSprite
         animation.play('idle');
         isActive = false;
         all.add(this);
+        health = STARTING_HEALTH;
     }
 
     override public function update(elapsed:Float)
     {
+        if(health <= 0) {
+            kill();
+        }
         if(isActive) {
             FlxVelocity.moveTowardsObject(this, player, SPEED);
             //FlxMath.accelerateTowardsObject(
