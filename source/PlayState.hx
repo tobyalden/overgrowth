@@ -446,9 +446,9 @@ class PlayState extends FlxState
         player.kill();
         new FlxTimer().start(2,
             function fadeToStart(_:FlxTimer) {
-                FlxG.camera.fade(FlxColor.BLACK, 3, false, function()
+                FlxG.camera.fade(FlxColor.WHITE, 1.5, false, function()
                 {
-                    FlxG.switchState(new StartScreen());
+                    FlxG.switchState(new StartScreen(FlxColor.WHITE));
                 }, true);
             }
         , 1);
