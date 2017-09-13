@@ -32,7 +32,7 @@ class Enemy extends FlxSprite
     public function new(x:Int, y:Int, player:Player) {
         super(x, y);
         startX = x;
-        startY = x;
+        startY = y;
         this.player = player;
         isActive = false;
         all.add(this);
