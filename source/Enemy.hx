@@ -19,8 +19,10 @@ class Enemy extends FlxSprite
     private var startX:Int;
     private var startY:Int;
 
-    static public function getRandomEnemy(x:Int, y:Int, player:Player):Enemy {
-        var rand = Math.floor(Math.random() * 2);
+    static public function getRandomEnemy(
+        x:Int, y:Int, player:Player, depth:Int
+    ):Enemy {
+        var rand = Math.floor(Math.random() * depth);
         if(rand == 1) {
             return new Jumper(x, y, player);
         }

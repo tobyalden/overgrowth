@@ -7,6 +7,7 @@ import flixel.util.*;
 
 class Parasite extends Enemy
 {
+    public static inline var STARTING_HEALTH = 2;
     public static inline var ACCELERATION = 5000;
     public static inline var SPEED = 40;
 
@@ -14,6 +15,7 @@ class Parasite extends Enemy
         super(x, y, player);
         loadGraphic('assets/images/parasite.png', true, 16, 16);
         animation.add('idle', [0, 1, 2, 3, 4], 10);
+        health = STARTING_HEALTH;
         animation.play('idle');
     }
 

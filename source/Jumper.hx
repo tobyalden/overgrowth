@@ -9,6 +9,7 @@ class Jumper extends Enemy
 {
     public static inline var JUMP_POWER_X = 100;
     public static inline var JUMP_POWER_Y = 100;
+    public static inline var STARTING_HEALTH = 5;
     private var jumpTimer:FlxTimer;
     private var isOnGround:Bool;
 
@@ -21,6 +22,7 @@ class Jumper extends Enemy
         jumpTimer = new FlxTimer();
         jumpTimer.start(1, jump, 0);
         isOnGround = false;
+        health = STARTING_HEALTH;
     }
 
     override public function update(elapsed:Float)

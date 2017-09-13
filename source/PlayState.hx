@@ -191,7 +191,8 @@ class PlayState extends FlxState
                 randY = Math.floor(Math.random() * map.heightInTiles);
             }
             var enemy = Enemy.getRandomEnemy(
-                Std.int(map.x + randX * 16), Std.int(map.y + randY * 16), player
+                Std.int(map.x + randX * 16), 
+                Std.int(map.y + randY * 16), player, depth
             );
             add(enemy);
         }
@@ -310,7 +311,7 @@ class PlayState extends FlxState
                         }
                         var enemy = Enemy.getRandomEnemy(
                             Std.int(map.x + randX * 16),
-                            Std.int(map.y + randY * 16), player
+                            Std.int(map.y + randY * 16), player, depth
                         );
                         add(enemy);
                     }
