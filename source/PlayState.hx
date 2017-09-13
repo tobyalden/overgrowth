@@ -189,7 +189,7 @@ class PlayState extends FlxState
                 randX = Math.floor(Math.random() * map.widthInTiles);
                 randY = Math.floor(Math.random() * map.heightInTiles);
             }
-            var enemy = new Enemy(
+            var enemy = new Parasite(
                 Std.int(map.x + randX * 16), Std.int(map.y + randY * 16), player
             );
             add(enemy);
@@ -307,7 +307,7 @@ class PlayState extends FlxState
                                 Math.random() * map.heightInTiles
                             );
                         }
-                        var enemy = new Enemy(
+                        var enemy = new Parasite(
                             Std.int(map.x + randX * 16),
                             Std.int(map.y + randY * 16), player
                         );

@@ -8,8 +8,6 @@ import flixel.util.*;
 class Enemy extends FlxSprite
 {
     public static inline var ACTIVE_RADIUS = 140;
-    public static inline var SPEED = 40;
-    public static inline var ACCELERATION = 5000;
     public static inline var STARTING_HEALTH = 4;
 
     static public var all:FlxGroup = new FlxGroup();
@@ -37,11 +35,7 @@ class Enemy extends FlxSprite
             kill();
         }
         if(isActive) {
-            if(!reelTimer.active) {
-                FlxVelocity.accelerateTowardsObject(
-                    this, player, ACCELERATION, SPEED
-                );
-            }
+            movement();
         }
         else {
             isActive = FlxMath.distanceBetween(this, player) < ACTIVE_RADIUS;
@@ -50,6 +44,8 @@ class Enemy extends FlxSprite
         }
         super.update(elapsed);
     }
+
+    public function movement() { }
 
     public function takeHit(bullet:FlxObject) {
         health -= 1;
