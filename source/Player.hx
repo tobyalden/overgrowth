@@ -28,6 +28,7 @@ class Player extends FlxSprite
 
     private var runSfx:FlxSound;
     private var shootSfx:FlxSound;
+    private var deathSfx:FlxSound;
 
     public function new(x:Int, y:Int)
     {
@@ -50,6 +51,7 @@ class Player extends FlxSprite
         isLookingDown = false;
         runSfx = FlxG.sound.load('assets/sounds/runloop.wav');
         shootSfx = FlxG.sound.load('assets/sounds/shoot.wav');
+        deathSfx = FlxG.sound.load('assets/sounds/death.wav');
         runSfx.looped = true;
         runSfx.volume = 0.5;
         width = 5;
@@ -204,7 +206,9 @@ class Player extends FlxSprite
     }
 
     override public function kill() {
+        deathSfx.play();
         FlxG.state.add(new Explosion(this));
+        runSfx.stop();
         super.kill();
     }
 
