@@ -42,10 +42,6 @@ class Enemy extends FlxSprite
                     this, player, ACCELERATION, SPEED
                 );
             }
-            else {
-                //acceleration.x = 0;
-                //acceleration.y = 0;
-            }
         }
         else {
             isActive = FlxMath.distanceBetween(this, player) < ACTIVE_RADIUS;

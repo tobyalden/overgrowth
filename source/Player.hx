@@ -52,6 +52,10 @@ class Player extends FlxSprite
         shootSfx = FlxG.sound.load('assets/sounds/shoot.wav');
         runSfx.looped = true;
         runSfx.volume = 0.5;
+        width = 5;
+        height = 19;
+        offset.x = 6;
+        offset.y = 5;
     }
 
     override public function update(elapsed:Float)
