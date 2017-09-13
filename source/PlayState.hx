@@ -14,12 +14,13 @@ class PlayState extends FlxState
     public static inline var TOTAL_BACKGROUNDS = 6;
     public static inline var BASE_ENEMY_COUNT = 6;
 
+    public static var currentMap:FlxTilemap;
+
     private var player:Player;
     private var key:Key;
     private var door:Door;
     private var maps:Map<String, FlxTilemap>;
     private var bigMaps:Map<String, FlxTilemap>;
-    private var currentMap:FlxTilemap;
     private var layout:FlxTilemap;
     private var startKey:Array<Int>;
     private var exitKey:Array<Int>;
@@ -189,7 +190,7 @@ class PlayState extends FlxState
                 randX = Math.floor(Math.random() * map.widthInTiles);
                 randY = Math.floor(Math.random() * map.heightInTiles);
             }
-            var enemy = new Parasite(
+            var enemy = Enemy.getRandomEnemy(
                 Std.int(map.x + randX * 16), Std.int(map.y + randY * 16), player
             );
             add(enemy);
@@ -307,7 +308,7 @@ class PlayState extends FlxState
                                 Math.random() * map.heightInTiles
                             );
                         }
-                        var enemy = new Parasite(
+                        var enemy = Enemy.getRandomEnemy(
                             Std.int(map.x + randX * 16),
                             Std.int(map.y + randY * 16), player
                         );

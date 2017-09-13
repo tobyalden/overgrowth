@@ -16,12 +16,22 @@ class Enemy extends FlxSprite
     private var reelTimer:FlxTimer;
     private var player:Player;
 
+    private var startX:Int;
+    private var startY:Int;
+
+    static public function getRandomEnemy(x:Int, y:Int, player:Player):Enemy {
+        var rand = Math.floor(Math.random() * 2);
+        if(rand == 1) {
+            return new Jumper(x, y, player);
+        }
+        return new Parasite(x, y, player);
+    }
+
     public function new(x:Int, y:Int, player:Player) {
         super(x, y);
+        startX = x;
+        startY = x;
         this.player = player;
-        loadGraphic('assets/images/parasite.png', true, 16, 16);
-        animation.add('idle', [0, 1, 2, 3, 4], 10);
-        animation.play('idle');
         isActive = false;
         all.add(this);
         health = STARTING_HEALTH;
@@ -34,11 +44,19 @@ class Enemy extends FlxSprite
         if(health <= 0) {
             kill();
         }
+        if(isActive && !FlxG.overlap(this, PlayState.currentMap)) {
+            isActive = false;
+            x = startX;
+            y = startY;
+        }
         if(isActive) {
             movement();
         }
         else {
-            isActive = FlxMath.distanceBetween(this, player) < ACTIVE_RADIUS;
+            isActive = (
+                FlxG.overlap(this, PlayState.currentMap)
+                && FlxMath.distanceBetween(this, player) < ACTIVE_RADIUS
+            );
             velocity.x = 0;
             velocity.y = 0;
         }
