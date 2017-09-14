@@ -26,6 +26,12 @@ class Enemy extends FlxSprite
         if(rand == 1) {
             return new Jumper(x, y, player);
         }
+        if(rand == 2) {
+            return new Bouncer(x, y, player);
+        }
+        if(rand == 3) {
+            return new Swinger(x, y, player);
+        }
         return new Parasite(x, y, player);
     }
 
