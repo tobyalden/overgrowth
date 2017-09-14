@@ -31,6 +31,7 @@ class PlayState extends FlxState
     private var worldHeight:Int;
 
     private var depth:Int;
+    private var depthDisplay:DepthDisplay;
     private var enemyCount:Int;
 
     public function new(depth:Int) {
@@ -41,6 +42,7 @@ class PlayState extends FlxState
 
 	override public function create():Void
 	{
+        depthDisplay = new DepthDisplay(0, 0, depth);
         isFadingOut = false;
         player = new Player(0, 0);
         var randBackground = Math.ceil(Math.random() * TOTAL_BACKGROUNDS);
@@ -95,6 +97,7 @@ class PlayState extends FlxState
             decorateMap(map);
         }
         addEnemies();
+        add(depthDisplay);
 
         FlxG.camera.fade(FlxColor.BLACK, 2, true);
         FlxG.sound.music.fadeOut();
@@ -483,6 +486,8 @@ class PlayState extends FlxState
             }, true);
             isFadingOut = true;
         }
+        depthDisplay.x = currentMap.x;
+        depthDisplay.y = currentMap.y;
 		super.update(elapsed);
 	}
 
