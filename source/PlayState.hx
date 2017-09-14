@@ -82,7 +82,6 @@ class PlayState extends FlxState
         addExit();
         addStart();
         addKey();
-        addEnemies();
 
         FlxG.worldBounds.set(
             0, 0,
@@ -95,6 +94,8 @@ class PlayState extends FlxState
             add(map);
             decorateMap(map);
         }
+        addEnemies();
+
         FlxG.camera.fade(FlxColor.BLACK, 2, true);
         FlxG.sound.music.fadeOut();
 		super.create();
@@ -192,7 +193,7 @@ class PlayState extends FlxState
             }
             var enemy = Enemy.getRandomEnemy(
                 Std.int(map.x + randX * 16), 
-                Std.int(map.y + randY * 16), player, depth
+                Std.int(map.y + randY * 16), player, depth, false
             );
             add(enemy);
         }
@@ -311,7 +312,8 @@ class PlayState extends FlxState
                         }
                         var enemy = Enemy.getRandomEnemy(
                             Std.int(map.x + randX * 16),
-                            Std.int(map.y + randY * 16), player, depth
+                            Std.int(map.y + randY * 16), player, depth,
+                            true
                         );
                         add(enemy);
                     }
@@ -464,6 +466,9 @@ class PlayState extends FlxState
         );
         FlxG.collide(Enemy.all, Enemy.all);
         if(FlxG.overlap(player, Enemy.all)) {
+            killPlayer();
+        }
+        if(FlxG.overlap(player, Ghost.ghosts)) {
             killPlayer();
         }
         if(FlxG.overlap(player, key)) {
