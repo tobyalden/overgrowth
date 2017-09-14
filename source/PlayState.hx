@@ -12,7 +12,7 @@ class PlayState extends FlxState
     public static inline var TOTAL_BIG_MAPS = 3;
     public static inline var TOTAL_LAYOUTS = 10;
     public static inline var TOTAL_BACKGROUNDS = 6;
-    public static inline var BASE_ENEMY_COUNT = 6;
+    public static inline var BASE_ENEMY_COUNT = 2;
 
     public static var maps:Map<String, FlxTilemap>;
     public static var currentMap:FlxTilemap;

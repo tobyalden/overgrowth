@@ -58,7 +58,6 @@ class Enemy extends FlxSprite
         reelTimer = new FlxTimer();
         reelTimer.loops = 1;
         hurtSfx = FlxG.sound.load('assets/sounds/enemyhit.wav');
-        hurtSfx.volume = 0.5;
         deathSfx = FlxG.sound.load('assets/sounds/enemydeath.wav');
     }
 
@@ -96,9 +95,9 @@ class Enemy extends FlxSprite
     public function movement() { }
 
     public function takeHit(bullet:FlxObject) {
+        hurtSfx.play();
         health -= 1;
         reelTimer.start(0.2);
-        hurtSfx.play();
     }
 
 
