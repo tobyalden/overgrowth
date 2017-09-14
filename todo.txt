@@ -8,3 +8,7 @@
 - add music (tues)
 - add bosses (weds)
 - add endings (thurs)
+
+
+- add enemy hit / die sfx
+- add jump / land sfx

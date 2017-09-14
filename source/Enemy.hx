@@ -3,6 +3,7 @@ package;
 import flixel.*;
 import flixel.group.*;
 import flixel.math.*;
+import flixel.system.*;
 import flixel.util.*;
 
 class Enemy extends FlxSprite
@@ -15,6 +16,8 @@ class Enemy extends FlxSprite
     private var isActive:Bool;
     private var reelTimer:FlxTimer;
     private var player:Player;
+    private var hurtSfx:FlxSound;
+    private var deathSfx:FlxSound;
 
     private var startX:Int;
     private var startY:Int;
@@ -54,6 +57,9 @@ class Enemy extends FlxSprite
         health = STARTING_HEALTH;
         reelTimer = new FlxTimer();
         reelTimer.loops = 1;
+        hurtSfx = FlxG.sound.load('assets/sounds/enemyhit.wav');
+        hurtSfx.volume = 0.5;
+        deathSfx = FlxG.sound.load('assets/sounds/enemydeath.wav');
     }
 
     override public function update(elapsed:Float)
@@ -92,11 +98,13 @@ class Enemy extends FlxSprite
     public function takeHit(bullet:FlxObject) {
         health -= 1;
         reelTimer.start(0.2);
+        hurtSfx.play();
     }
 
 
     override public function kill() {
         FlxG.state.add(new Explosion(this));
+        deathSfx.play();
         super.kill();
     }
 

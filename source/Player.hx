@@ -29,6 +29,8 @@ class Player extends FlxSprite
     private var runSfx:FlxSound;
     private var shootSfx:FlxSound;
     private var deathSfx:FlxSound;
+    private var jumpSfx:FlxSound;
+    private var landSfx:FlxSound;
 
     public function new(x:Int, y:Int)
     {
@@ -52,6 +54,10 @@ class Player extends FlxSprite
         runSfx = FlxG.sound.load('assets/sounds/runloop.wav');
         shootSfx = FlxG.sound.load('assets/sounds/shoot.wav');
         deathSfx = FlxG.sound.load('assets/sounds/death.wav');
+        jumpSfx = FlxG.sound.load('assets/sounds/jump.wav');
+        landSfx = FlxG.sound.load('assets/sounds/land.wav');
+        jumpSfx.volume = 0.5;
+        landSfx.volume = 0.55;
         runSfx.looped = true;
         runSfx.volume = 0.5;
         width = 5;
@@ -62,6 +68,9 @@ class Player extends FlxSprite
 
     override public function update(elapsed:Float)
     {
+        if(justTouched(FlxObject.FLOOR)) {
+            landSfx.play();
+        }
         isOnGround = isTouching(FlxObject.DOWN);
         isLookingUp = FlxG.keys.pressed.UP;
         isLookingDown = FlxG.keys.pressed.DOWN;
@@ -164,6 +173,7 @@ class Player extends FlxSprite
 
         if(FlxG.keys.justPressed.Z && isOnGround) {
             velocity.y = -JUMP_POWER;
+            jumpSfx.play();
         }
         else if(FlxG.keys.justReleased.Z && !isOnGround) {
             velocity.y = Math.max(velocity.y, -JUMP_CANCEL_POWER);
