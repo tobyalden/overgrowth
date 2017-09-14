@@ -23,6 +23,7 @@ class Enemy extends FlxSprite
         x:Int, y:Int, player:Player, depth:Int
     ):Enemy {
         var rand = Math.floor(Math.random() * depth);
+        return new Predator(x, y, player);
         return new Swinger(x, y, player);
         if(rand == 1) {
             return new Jumper(x, y, player);
