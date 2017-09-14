@@ -38,6 +38,9 @@ class Enemy extends FlxSprite
         if(!isForBigMap && rand == 4) {
             return new Ghost(x, y, player);
         }
+        if(rand == 5) {
+            return new Predator(x, y, player);
+        }
         return new Swinger(x, y, player);
     }
 
