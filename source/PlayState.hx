@@ -14,12 +14,12 @@ class PlayState extends FlxState
     public static inline var TOTAL_BACKGROUNDS = 6;
     public static inline var BASE_ENEMY_COUNT = 6;
 
+    public static var maps:Map<String, FlxTilemap>;
     public static var currentMap:FlxTilemap;
 
     private var player:Player;
     private var key:Key;
     private var door:Door;
-    private var maps:Map<String, FlxTilemap>;
     private var bigMaps:Map<String, FlxTilemap>;
     private var layout:FlxTilemap;
     private var startKey:Array<Int>;

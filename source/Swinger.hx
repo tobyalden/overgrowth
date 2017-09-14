@@ -14,7 +14,7 @@ class Swinger extends Enemy
     public function new(x:Int, y:Int, player:Player) {
         super(x, y, player);
         loadGraphic('assets/images/swinger.png', true, 16, 16);
-        animation.add('idle', [0, 1, 2, 3, 4], 10);
+        animation.add('idle', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 10);
         health = STARTING_HEALTH;
         animation.play('idle');
     }

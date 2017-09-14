@@ -23,6 +23,7 @@ class Enemy extends FlxSprite
         x:Int, y:Int, player:Player, depth:Int
     ):Enemy {
         var rand = Math.floor(Math.random() * depth);
+        return new Swinger(x, y, player);
         if(rand == 1) {
             return new Jumper(x, y, player);
         }
@@ -52,7 +53,14 @@ class Enemy extends FlxSprite
         if(health <= 0) {
             kill();
         }
-        if(isActive && !FlxG.overlap(this, PlayState.currentMap)) {
+        if(
+            isActive 
+            && !FlxG.overlap(this, PlayState.currentMap)
+            && !(
+                Math.floor(startX/FlxG.width) == Math.floor(player.x/FlxG.width)
+                && Math.floor(startY/FlxG.height) == Math.floor(player.y/FlxG.height)
+            )
+        ) {
             isActive = false;
             x = startX;
             y = startY;
