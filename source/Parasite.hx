@@ -7,7 +7,7 @@ import flixel.util.*;
 
 class Parasite extends Enemy
 {
-    public static inline var STARTING_HEALTH = 2;
+    public static inline var STARTING_HEALTH = 1;
     public static inline var ACCELERATION = 5000;
     public static inline var SPEED = 40;
 
