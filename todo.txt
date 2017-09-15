@@ -1,14 +1,5 @@
-+ add start screen
-+ add tutorial
-+ add multiple levels
+- add weirdness
+- add music
+- add seer shoot sfx
+- add ending / boss
 
-- add enemies (mon)
-- add lives (tues)
-- add sfx (tues)
-- add music (tues)
-- add bosses (weds)
-- add endings (thurs)
-
-
-- add enemy hit / die sfx
-- add jump / land sfx
