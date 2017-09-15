@@ -25,29 +25,36 @@ class Enemy extends FlxSprite
     static public function getRandomEnemy(
         x:Int, y:Int, player:Player, depth:Int, isForBigMap:Bool
     ):Enemy {
-        var rand = Math.floor(Math.random() * depth);
-        return new Swinger(x, y, player);
-        //return new Leaper(x, y, player);
-        //return new Flopper(x, y, player);
-        if(rand == 0) {
+        var rand = Math.ceil(Math.random() * depth);
+        return new Flopper(x, y, player);
+        if(rand == 1) {
             return new Parasite(x, y, player);
         }
-        if(rand == 1) {
+        if(rand == 2) {
             return new Jumper(x, y, player);
         }
-        if(rand == 2) {
+        if(rand == 3) {
             return new Bouncer(x, y, player);
         }
-        if(rand == 3) {
+        if(rand == 4) {
             return new Swinger(x, y, player);
         }
-        if(!isForBigMap && rand == 4) {
+        if(rand == 5) {
+            return new Flopper(x, y, player);
+        }
+        if(rand == 6) {
+            return new Flopper(x, y, player);
+        }
+        if(rand == 7) {
+            return new Leaper(x, y, player);
+        }
+        if(!isForBigMap && rand == 8) {
             return new Ghost(x, y, player);
         }
-        if(rand == 5) {
+        if(rand == 9) {
             return new Predator(x, y, player);
         }
-        return new Swinger(x, y, player);
+        return new Parasite(x, y, player);
     }
 
     public function new(x:Int, y:Int, player:Player) {

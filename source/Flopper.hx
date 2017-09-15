@@ -7,8 +7,8 @@ import flixel.util.*;
 
 class Flopper extends Enemy
 {
-    public static inline var JUMP_POWER_X = 100;
-    public static inline var JUMP_POWER_Y = 200;
+    public static inline var JUMP_POWER_X = 60;
+    public static inline var JUMP_POWER_Y = 160;
     public static inline var STARTING_HEALTH = 5;
     private var jumpTimer:FlxTimer;
     private var isOnGround:Bool;
@@ -27,20 +27,20 @@ class Flopper extends Enemy
 
     override public function update(elapsed:Float)
     {
-        isOnGround = isTouching(FlxObject.DOWN);
+        isOnGround = isTouching(FlxObject.UP);
         if(isOnGround) {
             velocity.x = 0;
             velocity.y = 0;
         }
         else {
-            velocity.y += Player.GRAVITY/3;
+            velocity.y -= Player.GRAVITY/3;
         }
         super.update(elapsed);
     }
 
     private function jump(_:FlxTimer) {
-        y -= 1;
-        velocity.y = -JUMP_POWER_Y;
+        y += 1;
+        velocity.y = JUMP_POWER_Y;
         if (x < player.x) {
             velocity.x = JUMP_POWER_X;
         }
