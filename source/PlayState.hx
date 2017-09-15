@@ -456,6 +456,11 @@ class PlayState extends FlxState
                 bullet.destroy();
             }
         }
+        for (bullet in EnemyBullet.all) {
+            if(currentMap.overlaps(bullet)) {
+                bullet.destroy();
+            }
+        }
         FlxG.overlap(
             Enemy.all, Bullet.all,
             function(enemy:FlxObject, bullet:FlxObject) {
@@ -465,6 +470,9 @@ class PlayState extends FlxState
         );
         FlxG.collide(Enemy.all, Enemy.all);
         if(FlxG.overlap(player, Enemy.all)) {
+            killPlayer();
+        }
+        if(FlxG.overlap(player, EnemyBullet.all)) {
             killPlayer();
         }
         if(FlxG.overlap(player, Ghost.ghosts)) {

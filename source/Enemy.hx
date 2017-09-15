@@ -26,7 +26,7 @@ class Enemy extends FlxSprite
         x:Int, y:Int, player:Player, depth:Int, isForBigMap:Bool
     ):Enemy {
         var rand = Math.ceil(Math.random() * depth);
-        return new Flopper(x, y, player);
+        return new Seer(x, y, player);
         if(rand == 1) {
             return new Parasite(x, y, player);
         }
