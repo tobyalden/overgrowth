@@ -460,10 +460,6 @@ class PlayState extends FlxState
             Enemy.all, Bullet.all,
             function(enemy:FlxObject, bullet:FlxObject) {
                 cast(enemy, Enemy).takeHit(bullet);
-                enemy.velocity.x = bullet.velocity.x * 3;
-                enemy.velocity.y = bullet.velocity.y * 3;
-                enemy.acceleration.x = bullet.acceleration.x * 3;
-                enemy.acceleration.y = bullet.acceleration.y * 3;
                 bullet.destroy();
             } 
         );

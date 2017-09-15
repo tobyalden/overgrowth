@@ -26,6 +26,7 @@ class Enemy extends FlxSprite
         x:Int, y:Int, player:Player, depth:Int, isForBigMap:Bool
     ):Enemy {
         var rand = Math.floor(Math.random() * depth);
+        return new Swinger(x, y, player);
         //return new Leaper(x, y, player);
         //return new Flopper(x, y, player);
         if(rand == 0) {
@@ -100,6 +101,10 @@ class Enemy extends FlxSprite
         hurtSfx.play();
         health -= 1;
         reelTimer.start(0.2);
+        velocity.x = bullet.velocity.x * 3;
+        velocity.y = bullet.velocity.y * 3;
+        acceleration.x = bullet.acceleration.x * 3;
+        acceleration.y = bullet.acceleration.y * 3;
     }
 
 

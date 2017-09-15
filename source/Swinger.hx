@@ -17,6 +17,7 @@ class Swinger extends Enemy
         animation.add('idle', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 10);
         health = STARTING_HEALTH;
         animation.play('idle');
+        maxVelocity = new FlxPoint(SPEED, SPEED);
     }
 
     override public function movement()
