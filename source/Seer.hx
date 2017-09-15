@@ -3,15 +3,17 @@ package;
 import flixel.*;
 import flixel.group.*;
 import flixel.math.*;
+import flixel.system.*;
 import flixel.util.*;
 
 class Seer extends Enemy
 {
-    public static inline var STARTING_HEALTH = 6;
+    public static inline var STARTING_HEALTH = 2;
     public static inline var SHOT_SPEED = 200;
 
     private var myFacing:String;
     private var shootTimer:FlxTimer;
+    private var shootSfx:FlxSound;
 
     public function new(x:Int, y:Int, player:Player) {
         super(x, y, player);
@@ -25,6 +27,8 @@ class Seer extends Enemy
         health = STARTING_HEALTH;
         shootTimer = new FlxTimer();
         shootTimer.start(1, shoot, 0);
+        shootSfx = FlxG.sound.load('assets/sounds/enemyshoot.wav');
+        shootSfx.volume = 0.24;
     }
 
     override public function movement() {
@@ -66,6 +70,12 @@ class Seer extends Enemy
             Std.int(x + 8), Std.int(y + 8), bulletVelocity, player
         );
         FlxG.state.add(bullet);
+        if (
+            Math.floor(x/FlxG.width) == Math.floor(player.x/FlxG.width)
+            && Math.floor(y/FlxG.height) == Math.floor(player.y/FlxG.height)
+        ) {
+            shootSfx.play();
+        }
     }
 
 }

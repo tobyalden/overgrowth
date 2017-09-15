@@ -43,7 +43,12 @@ class EnemyBullet extends FlxSprite
     override public function destroy()
     {
         FlxG.state.add(new Explosion(this));
-        hitSfx.play(true);
+        if (
+            Math.floor(x/FlxG.width) == Math.floor(player.x/FlxG.width)
+            && Math.floor(y/FlxG.height) == Math.floor(player.y/FlxG.height)
+        ) {
+            hitSfx.play(true);
+        }
         all.remove(this);
         super.destroy();
     }
