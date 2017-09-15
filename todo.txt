@@ -1,5 +1,6 @@
 - add weirdness
 - add music
-- add seer shoot sfx
 - add ending / boss
-
+- adjust all health values
+- cap enemy count to something reasonable (no super crowded rooms outside of big rooms pls)
+- add more graphics (more backgrounds, maybe animate light)
