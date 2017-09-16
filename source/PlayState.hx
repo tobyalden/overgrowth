@@ -530,6 +530,8 @@ class PlayState extends FlxState
         }
         depthDisplay.x = currentMap.x;
         depthDisplay.y = currentMap.y;
+        depthDisplay.x = FlxG.camera.scroll.x;
+        depthDisplay.y = FlxG.camera.scroll.y;
 		super.update(elapsed);
 	}
 
