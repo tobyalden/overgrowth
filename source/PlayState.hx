@@ -37,7 +37,7 @@ class PlayState extends FlxState
     public function new(depth:Int) {
         super();
         this.depth = depth;
-        enemyCount = BASE_ENEMY_COUNT + depth * 2;
+        enemyCount = BASE_ENEMY_COUNT + Math.ceil(depth/3 * 2);
     }
 
 	override public function create():Void
