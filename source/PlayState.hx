@@ -81,9 +81,19 @@ class PlayState extends FlxState
         }
 
         addBigMap();
-        addExit();
+        if(depth < 10) {
+            addExit();
+        }
+        else {
+            exitKey = [-1, -1];
+        }
         addStart();
-        addKey();
+        if(depth < 10) {
+            addKey();
+        }
+        else {
+            keyKey = [-1, -1];
+        }
 
         FlxG.worldBounds.set(
             0, 0,
@@ -96,7 +106,9 @@ class PlayState extends FlxState
             add(map);
             decorateMap(map);
         }
-        addEnemies();
+        if(depth < 10) {
+            addEnemies();
+        }
         add(depthDisplay);
 
         FlxG.camera.fade(FlxColor.BLACK, 2, true);
@@ -279,8 +291,11 @@ class PlayState extends FlxState
                     maps.remove([x, y + 1].toString());
                     maps.remove([x + 1, y + 1].toString());
                     var map = new FlxTilemap();
-                    var rand = Math.ceil(Math.random() * TOTAL_BIG_MAPS);
-                    var mapPath = 'assets/data/maps/big/' + rand + '.png';
+                    var mapPath = 'assets/data/maps/big/bossroom.png';
+                    if(depth < 10) {
+                        var rand = Math.ceil(Math.random() * TOTAL_BIG_MAPS);
+                        mapPath = 'assets/data/maps/big/' + rand + '.png';
+                    }
                     map.loadMapFromGraphic(
                         mapPath, false, 1, 'assets/images/tiles.png', 16, 16,
                         AUTO
@@ -293,6 +308,16 @@ class PlayState extends FlxState
                     bigMaps.set([x + 1, y].toString(), map);
                     bigMaps.set([x, y + 1].toString(), map);
                     bigMaps.set([x + 1, y + 1].toString(), map);
+
+                    if(depth == 10) {
+                        var boss = new Boss(
+                            Std.int(map.x + map.width/2 - 32),
+                            Std.int(map.y + map.height/2 - 32),
+                            player
+                        );
+                        add(boss);
+                        return;
+                    }
 
                     for(i in 0...enemyCount) {
                         var randX = Math.floor(
