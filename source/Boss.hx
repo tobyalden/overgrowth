@@ -8,8 +8,8 @@ import flixel.util.*;
 
 class Boss extends Enemy
 {
-    //public static inline var STARTING_HEALTH = 30;
-    public static inline var STARTING_HEALTH = 1;
+    public static inline var STARTING_HEALTH = 30;
+    //public static inline var STARTING_HEALTH = 1;
     public static inline var SPEED = 40;
     public static inline var ACCELERATION = 5000;
     public static inline var SHOT_SPEED = 180;
