@@ -29,6 +29,7 @@ class PlayState extends FlxState
 
     private var worldWidth:Int;
     private var worldHeight:Int;
+    private var tilesetPath:String;
 
     private var depth:Int;
     private var depthDisplay:DepthDisplay;
@@ -42,6 +43,13 @@ class PlayState extends FlxState
 
 	override public function create():Void
 	{
+        tilesetPath = 'assets/images/tiles.png';
+        if(depth > 6) {
+            tilesetPath = 'assets/images/tiles3.png';
+        }
+        else if(depth > 3) {
+            tilesetPath = 'assets/images/tiles2.png';
+        }
         depthDisplay = new DepthDisplay(0, 0, depth);
         isFadingOut = false;
         player = new Player(0, 0);
@@ -70,7 +78,7 @@ class PlayState extends FlxState
                     var rand = Math.ceil(Math.random() * TOTAL_MAPS);
                     var mapPath = 'assets/data/maps/' + rand + '.png';
                     map.loadMapFromGraphic(
-                        mapPath, false, 1, 'assets/images/tiles.png', 16, 16, AUTO
+                        mapPath, false, 1, tilesetPath, 16, 16, AUTO
                     );
                     map.x = x * map.width;
                     map.y = y * map.height;
@@ -163,7 +171,7 @@ class PlayState extends FlxState
         maps.remove([randX, randY].toString());
         var mapPath = 'assets/data/maps/start.png';
         map.loadMapFromGraphic(
-            mapPath, false, 1, 'assets/images/tiles.png', 16, 16, AUTO
+            mapPath, false, 1, tilesetPath, 16, 16, AUTO
         );
         map.x = randX * map.width;
         map.y = randY * map.height;
@@ -232,7 +240,7 @@ class PlayState extends FlxState
         maps.remove([randX, randY].toString());
         var mapPath = 'assets/data/maps/start.png';
         map.loadMapFromGraphic(
-            mapPath, false, 1, 'assets/images/tiles.png', 16, 16, AUTO
+            mapPath, false, 1, tilesetPath, 16, 16, AUTO
         );
         map.x = randX * map.width;
         map.y = randY * map.height;
@@ -262,7 +270,7 @@ class PlayState extends FlxState
         maps.remove([randX, randY].toString());
         var mapPath = 'assets/data/maps/start.png';
         map.loadMapFromGraphic(
-            mapPath, false, 1, 'assets/images/tiles.png', 16, 16, AUTO
+            mapPath, false, 1, tilesetPath, 16, 16, AUTO
         );
         map.x = randX * map.width;
         map.y = randY * map.height;
@@ -298,7 +306,7 @@ class PlayState extends FlxState
                         mapPath = 'assets/data/maps/big/' + rand + '.png';
                     }
                     map.loadMapFromGraphic(
-                        mapPath, false, 1, 'assets/images/tiles.png', 16, 16,
+                        mapPath, false, 1, tilesetPath, 16, 16,
                         AUTO
                     );
                     map.x = x * map.width/2;
