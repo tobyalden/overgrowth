@@ -105,6 +105,7 @@ class Enemy extends FlxSprite
     public function movement() { }
 
     public function takeHit(bullet:FlxObject) {
+        isActive = true;
         hurtSfx.play();
         health -= 1;
         reelTimer.start(0.2);

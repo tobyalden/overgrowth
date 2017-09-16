@@ -83,17 +83,15 @@ class PlayState extends FlxState
         addBigMap();
         if(depth < 10) {
             addExit();
-        }
-        else {
-            exitKey = [-1, -1];
-        }
-        addStart();
-        if(depth < 10) {
+            addStart();
             addKey();
         }
         else {
+            exitKey = [-1, -1];
+            startKey = [-1, -1];
             keyKey = [-1, -1];
         }
+        add(player);
 
         FlxG.worldBounds.set(
             0, 0,
@@ -243,7 +241,6 @@ class PlayState extends FlxState
         }
         player.x = Std.int(currentMap.x + 8 * 16 - 8);
         player.y = Std.int(currentMap.y + 9 * 16 - 24 - 16);
-        add(player);
     }
 
     private function addExit()
@@ -311,11 +308,19 @@ class PlayState extends FlxState
 
                     if(depth == 10) {
                         var boss = new Boss(
-                            Std.int(map.x + map.width/2 - 32),
+                            Std.int(map.x + map.width/2 - 32) + 50,
                             Std.int(map.y + map.height/2 - 32),
                             player
                         );
                         add(boss);
+                        var boss2 = new BossTwo(
+                            Std.int(map.x + map.width/2 - 32) - 50,
+                            Std.int(map.y + map.height/2 - 32),
+                            player
+                        );
+                        add(boss2);
+                        player.x = Std.int(map.x + map.width/2);
+                        player.y = Std.int(map.y + map.height - 32);
                         return;
                     }
 
