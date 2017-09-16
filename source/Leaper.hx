@@ -9,7 +9,7 @@ class Leaper extends Enemy
 {
     public static inline var JUMP_POWER_X = 150;
     public static inline var JUMP_POWER_Y = 200;
-    public static inline var STARTING_HEALTH = 5;
+    public static inline var STARTING_HEALTH = 4;
     private var jumpTimer:FlxTimer;
     private var isOnGround:Bool;
 

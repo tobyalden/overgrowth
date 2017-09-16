@@ -8,7 +8,7 @@ import flixel.util.*;
 
 class Fleer extends Enemy
 {
-    public static inline var STARTING_HEALTH = 4;
+    public static inline var STARTING_HEALTH = 2;
     public static inline var SHOT_SPEED = 60;
 
     public static inline var ACCELERATION = 60;

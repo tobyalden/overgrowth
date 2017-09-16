@@ -9,7 +9,7 @@ class Flopper extends Enemy
 {
     public static inline var JUMP_POWER_X = 60;
     public static inline var JUMP_POWER_Y = 160;
-    public static inline var STARTING_HEALTH = 5;
+    public static inline var STARTING_HEALTH = 4;
     private var jumpTimer:FlxTimer;
     private var isOnGround:Bool;
 

@@ -7,7 +7,7 @@ import flixel.util.*;
 
 class Predator extends Enemy
 {
-    public static inline var STARTING_HEALTH = 4;
+    public static inline var STARTING_HEALTH = 6;
     public static inline var ACCELERATION = 80;
     public static inline var SPEED = 50;
 
