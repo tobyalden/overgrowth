@@ -8,7 +8,8 @@ import flixel.util.*;
 
 class Boss extends Enemy
 {
-    public static inline var STARTING_HEALTH = 30;
+    //public static inline var STARTING_HEALTH = 30;
+    public static inline var STARTING_HEALTH = 1;
     public static inline var SPEED = 40;
     public static inline var ACCELERATION = 5000;
     public static inline var SHOT_SPEED = 180;
@@ -17,6 +18,7 @@ class Boss extends Enemy
 
     private var shootTimer:FlxTimer;
     private var shootSfx:FlxSound;
+    private var humSfx:FlxSound;
 
     public function new(x:Int, y:Int, player:Player) {
         super(x, y, player);
@@ -39,6 +41,9 @@ class Boss extends Enemy
         shootTimer.start(0.8, shoot, 0);
         shootSfx = FlxG.sound.load('assets/sounds/enemyshoot.wav');
         shootSfx.volume = 0.24;
+        humSfx = FlxG.sound.load('assets/sounds/bossone.wav');
+        humSfx.looped = true;
+        humSfx.play();
     }
 
     override public function movement()
@@ -60,6 +65,11 @@ class Boss extends Enemy
             shootTimer.cancel();
         }
         super.takeHit(bullet);
+    }
+
+    override public function kill() {
+        humSfx.stop();
+        super.kill();
     }
 
     public function shoot(_:FlxTimer) {
