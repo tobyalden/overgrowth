@@ -3,6 +3,7 @@ package;
 import flixel.*;
 import flixel.group.*;
 import flixel.math.*;
+import flixel.system.*;
 import flixel.util.*;
 
 class Boss extends Enemy
@@ -10,6 +11,10 @@ class Boss extends Enemy
     public static inline var STARTING_HEALTH = 60;
     public static inline var SPEED = 40;
     public static inline var ACCELERATION = 5000;
+    public static inline var SHOT_SPEED = 180;
+
+    private var shootTimer:FlxTimer;
+    private var shootSfx:FlxSound;
 
     public function new(x:Int, y:Int, player:Player) {
         super(x, y, player);
@@ -27,6 +32,10 @@ class Boss extends Enemy
         height = 32;
         offset.x = 16;
         offset.y = 16;
+        shootTimer = new FlxTimer();
+        shootTimer.start(0.6, shoot, 0);
+        shootSfx = FlxG.sound.load('assets/sounds/enemyshoot.wav');
+        shootSfx.volume = 0.24;
     }
 
     override public function movement()
@@ -43,6 +52,26 @@ class Boss extends Enemy
 
     override public function takeHit(bullet:FlxObject) {
         animation.play('hurt');
+        if(health == 0) {
+            shootTimer.cancel();
+        }
         super.takeHit(bullet);
+    }
+
+    public function shoot(_:FlxTimer) {
+        var angle = FlxAngle.angleBetween(this, player, true);
+        var bulletVelocity = FlxVelocity.velocityFromAngle(angle, SHOT_SPEED);
+        bulletVelocity.x += velocity.x;
+        bulletVelocity.y += velocity.y;
+        var bullet = new BossBullet(
+            Std.int(x + 16), Std.int(y + 16), bulletVelocity, player
+        );
+        FlxG.state.add(bullet);
+        if (
+            Math.floor(x/FlxG.width) == Math.floor(player.x/FlxG.width)
+            && Math.floor(y/FlxG.height) == Math.floor(player.y/FlxG.height)
+        ) {
+            shootSfx.play();
+        }
     }
 }

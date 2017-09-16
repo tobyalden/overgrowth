@@ -486,6 +486,11 @@ class PlayState extends FlxState
                 bullet.destroy();
             }
         }
+        for (bullet in BossBullet.all) {
+            if(currentMap.overlaps(bullet)) {
+                bullet.destroy();
+            }
+        }
         FlxG.overlap(
             Enemy.all, Bullet.all,
             function(enemy:FlxObject, bullet:FlxObject) {
@@ -498,6 +503,9 @@ class PlayState extends FlxState
             killPlayer();
         }
         if(FlxG.overlap(player, EnemyBullet.all)) {
+            killPlayer();
+        }
+        if(FlxG.overlap(player, BossBullet.all)) {
             killPlayer();
         }
         if(FlxG.overlap(player, Ghost.ghosts)) {
@@ -531,12 +539,4 @@ class PlayState extends FlxState
             }
         , 1);
     }
-
-
-
-    private function destroyBullet(bullet:FlxObject, _:FlxObject) {
-        cast(bullet, Bullet).destroy();
-        return true;
-    }
-
 }
