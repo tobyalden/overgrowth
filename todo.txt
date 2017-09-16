@@ -1,11 +1,12 @@
 NEED:
 + add bosses
-- add endings
++ add endings
++ add music
 - adjust all health values
+- spawn all enemies
 - add controller support
 - cap enemy count to something reasonable
- add music
-(no super crowded rooms outside of big rooms pls)
+    (no super crowded rooms outside of big rooms pls)
 
 WANT:
 - add a few more big maps

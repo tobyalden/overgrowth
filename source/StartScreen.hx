@@ -42,7 +42,7 @@ class StartScreen extends FlxState
             startSfx.play();
             FlxG.camera.fade(FlxColor.BLACK, 2.5, false, function()
             {
-                FlxG.switchState(new PlayState(10));
+                FlxG.switchState(new PlayState(8));
             }, true);
         }
         super.update(elapsed);
