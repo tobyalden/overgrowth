@@ -3,6 +3,7 @@ package;
 import flixel.*;
 import flixel.system.*;
 import flixel.util.*;
+import flixel.input.gamepad.*;
 
 class StartScreen extends FlxState
 {
@@ -11,6 +12,7 @@ class StartScreen extends FlxState
 
     private var isFadingOut:Bool;
     private var fadeInColor:FlxColor;
+    private var controller:FlxGamepad;
 
     public function new(fadeInColor:FlxColor) {
         super();
@@ -33,11 +35,23 @@ class StartScreen extends FlxState
 	}
 
 	override public function update(elapsed:Float):Void {
+        controller = FlxG.gamepads.getByID(0);
         if(isFadingOut) {
             super.update(elapsed);
             return;
         }
-        if(FlxG.keys.justPressed.Z || FlxG.keys.justPressed.X) {
+        var pressedStart = false;
+        if(
+            controller != null
+            && (controller.justPressed.X || controller.justPressed.A)
+        ) {
+           pressedStart = true; 
+        }
+        if(
+            FlxG.keys.justPressed.Z
+            || FlxG.keys.justPressed.X
+            || pressedStart
+        ) {
             isFadingOut = true;
             startSfx.play();
             FlxG.camera.fade(FlxColor.BLACK, 2.5, false, function()

@@ -4,6 +4,8 @@ import flixel.*;
 import flixel.math.*;
 import flixel.system.*;
 import flixel.util.*;
+import flixel.input.gamepad.*;
+import flixel.input.keyboard.*;
 
 
 class Player extends FlxSprite
@@ -20,6 +22,16 @@ class Player extends FlxSprite
     public static inline var GROUND_DRAG = 2000;
     public static inline var TERMINAL_VELOCITY = 300;
     public static inline var SHOT_COOLDOWN = 0.5;
+    public static inline var DEAD_ZONE = 0.25;
+
+    public static var P1_CONTROLS = [
+        'up'=>FlxKey.UP,
+        'down'=>FlxKey.DOWN,
+        'left'=>FlxKey.LEFT,
+        'right'=>FlxKey.RIGHT,
+        'jump'=>FlxKey.Z,
+        'shoot'=>FlxKey.X
+    ];
 
     private var shotCooldown:FlxTimer;
     private var isOnGround:Bool;
@@ -31,6 +43,9 @@ class Player extends FlxSprite
     private var deathSfx:FlxSound;
     private var jumpSfx:FlxSound;
     private var landSfx:FlxSound;
+
+    private var controls:Map<String, Int>;
+    private var controller:FlxGamepad;
 
     public function new(x:Int, y:Int)
     {
@@ -64,16 +79,18 @@ class Player extends FlxSprite
         height = 19;
         offset.x = 6;
         offset.y = 5;
+        controls = P1_CONTROLS;
     }
 
     override public function update(elapsed:Float)
     {
+        controller = FlxG.gamepads.getByID(0);
         if(justTouched(FlxObject.FLOOR)) {
             landSfx.play();
         }
         isOnGround = isTouching(FlxObject.DOWN);
-        isLookingUp = FlxG.keys.pressed.UP;
-        isLookingDown = FlxG.keys.pressed.DOWN;
+        isLookingUp = checkPressed('up');
+        isLookingDown = checkPressed('down');
         move();
         shoot();
         animate();
@@ -91,9 +108,72 @@ class Player extends FlxSprite
         }
     }
 
+    private function checkPressed(name:String) {
+        if(controller == null) {
+            return FlxG.keys.anyPressed([controls[name]]);
+        }
+        else {
+            if(name == 'shoot') {
+                return controller.pressed.X;
+            } 
+            if(name == 'jump') {
+                return controller.pressed.A;
+            } 
+            if(name == 'left') {
+                return controller.analog.value.LEFT_STICK_X < -DEAD_ZONE;
+            }
+            if(name == 'right') {
+                return controller.analog.value.LEFT_STICK_X > DEAD_ZONE;
+            }
+            if(name == 'up') {
+                return (
+                    controller.analog.value.LEFT_STICK_Y < -DEAD_ZONE
+                    || controller.pressed.LEFT_SHOULDER
+                );
+            }
+            if(name == 'down') {
+                return (
+                    controller.analog.value.LEFT_STICK_Y > DEAD_ZONE
+                    || controller.pressed.RIGHT_SHOULDER
+                );
+            }
+        }
+        return false;
+    }
+
+    private function checkJustPressed(name:String) {
+        if(controller == null) {
+            return FlxG.keys.anyJustPressed([controls[name]]);
+        }
+        else {
+            if(name == 'shoot') {
+                return controller.justPressed.X;
+            } 
+            if(name == 'jump') {
+                return controller.justPressed.A;
+            } 
+        }
+        return false;
+    }
+
+    private function checkJustReleased(name:String) {
+        if(controller == null) {
+            return FlxG.keys.anyJustReleased([controls[name]]);
+        }
+        else {
+            if(name == 'shoot') {
+                return controller.justReleased.X;
+            } 
+            if(name == 'jump') {
+                return controller.justReleased.A;
+            } 
+        }
+        return false;
+    }
+
     private function shoot()
     {
-        if(FlxG.keys.pressed.X && !shotCooldown.active)
+        if(checkPressed('shoot') && !shotCooldown.active)
         {
             shotCooldown.reset(SHOT_COOLDOWN);
             shootSfx.play(true);
@@ -142,7 +222,7 @@ class Player extends FlxSprite
 
     private function move()
     {
-        if(FlxG.keys.pressed.LEFT) {
+        if(checkPressed('left')) {
             if(isOnGround) {
                 acceleration.x = -GROUND_ACCEL;
             }
@@ -151,7 +231,7 @@ class Player extends FlxSprite
             }
             facing = FlxObject.LEFT;
         }
-        else if(FlxG.keys.pressed.RIGHT) {
+        else if(checkPressed('right')) {
             if(isOnGround) {
                 acceleration.x = GROUND_ACCEL;
             }
@@ -171,11 +251,11 @@ class Player extends FlxSprite
             }
         }
 
-        if(FlxG.keys.justPressed.Z && isOnGround) {
+        if(checkJustPressed('jump') && isOnGround) {
             velocity.y = -JUMP_POWER;
             jumpSfx.play();
         }
-        else if(FlxG.keys.justReleased.Z && !isOnGround) {
+        else if(checkJustReleased('jump') && !isOnGround) {
             velocity.y = Math.max(velocity.y, -JUMP_CANCEL_POWER);
         }
 
