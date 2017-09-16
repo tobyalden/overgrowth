@@ -8,13 +8,16 @@ import flixel.util.*;
 
 class BossTwo extends Enemy
 {
-    public static inline var STARTING_HEALTH = 60;
+    public static inline var STARTING_HEALTH = 35;
     public static inline var SPEED = 50;
     public static inline var ACCELERATION = 3000;
     public static inline var SHOT_SPEED = 180;
 
+    public static var theBoss:BossTwo;
+
     public function new(x:Int, y:Int, player:Player) {
         super(x, y, player);
+        theBoss = this;
         loadGraphic('assets/images/boss2.png', true, 64, 64);
         animation.add('idle', [
             //0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
@@ -46,6 +49,7 @@ class BossTwo extends Enemy
 
     override public function takeHit(bullet:FlxObject) {
         animation.play('hurt');
+        Boss.theBoss.isActive = true;
         super.takeHit(bullet);
     }
 }

@@ -4,7 +4,7 @@ NEED:
 - adjust all health values
 - add controller support
 - cap enemy count to something reasonable
-- add music
+ add music
 (no super crowded rooms outside of big rooms pls)
 
 WANT:

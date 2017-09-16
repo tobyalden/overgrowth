@@ -13,7 +13,7 @@ class Enemy extends FlxSprite
 
     static public var all:FlxGroup = new FlxGroup();
 
-    private var isActive:Bool;
+    public var isActive:Bool;
     private var reelTimer:FlxTimer;
     private var player:Player;
     private var hurtSfx:FlxSound;
