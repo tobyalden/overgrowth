@@ -62,6 +62,9 @@ class Seeker extends Enemy
     }
 
     public function shoot(_:FlxTimer) {
+        if(!isActive) {
+            return;
+        }
         var bulletVelocity = new FlxPoint(0, 0);
         if(!reelTimer.active) {
             if(

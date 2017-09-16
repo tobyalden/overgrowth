@@ -29,13 +29,6 @@ class EnemyBullet extends FlxSprite
 
     override public function update(elapsed:Float)
     {
-        if(!(
-            Math.floor(x/FlxG.width) == Math.floor(player.x/FlxG.width)
-            && Math.floor(y/FlxG.height) == Math.floor(player.y/FlxG.height)
-        )) {
-            destroy();
-            return;
-        }
         velocity.y += GRAVITY;
         super.update(elapsed);
     }
