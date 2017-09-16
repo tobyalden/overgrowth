@@ -69,6 +69,7 @@ class Boss extends Enemy
 
     override public function kill() {
         humSfx.stop();
+        shootTimer.cancel();
         super.kill();
     }
 

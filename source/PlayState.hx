@@ -468,6 +468,10 @@ class PlayState extends FlxState
             super.update(elapsed);
             return;
         }
+        if(depth == 10 && !Boss.theBoss.alive && !BossTwo.theBoss.alive) {
+           enlightenPlayer(); 
+           isFadingOut = true;
+        }
         var iter = maps.iterator();
         while(iter.hasNext()) {
             var map = iter.next();
@@ -546,4 +550,16 @@ class PlayState extends FlxState
             }
         , 1);
     }
+
+    private function enlightenPlayer() {
+        new FlxTimer().start(2,
+            function fadeToStart(_:FlxTimer) {
+                FlxG.camera.fade(FlxColor.RED, 1.5, false, function()
+                {
+                    FlxG.switchState(new TheEnd(FlxColor.RED));
+                }, true);
+            }
+        , 1);
+    }
+
 }
