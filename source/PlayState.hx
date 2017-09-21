@@ -35,6 +35,8 @@ class PlayState extends FlxState
     private var depthDisplay:DepthDisplay;
     private var enemyCount:Int;
 
+    private var fade:Fade;
+
     public function new(depth:Int) {
         super();
         this.depth = depth;
@@ -117,7 +119,11 @@ class PlayState extends FlxState
         }
         add(depthDisplay);
 
-        FlxG.camera.fade(FlxColor.BLACK, 2, true);
+        fade = new Fade();
+        fade.alpha = 1;
+        fade.fadeIn();
+        add(fade);
+
         FlxG.sound.music.fadeOut();
         if(depth < 10) {
             FlxG.sound.playMusic('assets/music/' + depth + '.ogg', 0, true);
@@ -538,10 +544,10 @@ class PlayState extends FlxState
         }
         if(FlxG.overlap(player, door) && door.animation.name == 'open') {
             door.leaveSfx.play();
-            FlxG.camera.fade(FlxColor.BLACK, 2.5, false, function()
-            {
+            fade.fadeOut();
+            new FlxTimer().start(2.5, function(_:FlxTimer) {
                 FlxG.switchState(new PlayState(depth + 1));
-            }, true);
+            }, 1);
             isFadingOut = true;
         }
         depthDisplay.x = currentMap.x;
@@ -555,10 +561,11 @@ class PlayState extends FlxState
         player.kill();
         new FlxTimer().start(2,
             function fadeToStart(_:FlxTimer) {
-                FlxG.camera.fade(FlxColor.WHITE, 1.5, false, function()
-                {
+                fade.animation.play('white');
+                fade.fadeOut();
+                new FlxTimer().start(1.5, function(_:FlxTimer) {
                     FlxG.switchState(new StartScreen(FlxColor.WHITE));
-                }, true);
+                }, 1);
             }
         , 1);
     }
@@ -566,10 +573,11 @@ class PlayState extends FlxState
     private function enlightenPlayer() {
         new FlxTimer().start(2,
             function fadeToStart(_:FlxTimer) {
-                FlxG.camera.fade(FlxColor.RED, 1.5, false, function()
-                {
-                    FlxG.switchState(new TheEnd(FlxColor.RED));
-                }, true);
+                fade.animation.play('white');
+                fade.fadeOut();
+                new FlxTimer().start(1.5, function(_:FlxTimer) {
+                    FlxG.switchState(new StartScreen(FlxColor.WHITE));
+                }, 1);
             }
         , 1);
     }

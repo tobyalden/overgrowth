@@ -6,7 +6,7 @@ import flixel.util.*;
 class Fade extends FlxSprite
 {
 
-    public static inline var FADE_SPEED = 0.006;
+    public static inline var FADE_SPEED = 0.015;
 
     private var isFadingIn:Bool;
     private var isFadingOut:Bool;

@@ -26,6 +26,9 @@ class StartScreen extends FlxState
         var title = new FlxSprite(0, 0);
         fade = new Fade();
         fade.alpha = 1;
+        if(fadeInColor == FlxColor.WHITE) {
+            fade.animation.play('white');
+        }
         fade.fadeIn();
         title.loadGraphic('assets/images/title.png', true, 256, 240);
         title.animation.add('idle', [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1], 10);
@@ -59,8 +62,9 @@ class StartScreen extends FlxState
         ) {
             isFadingOut = true;
             startSfx.play();
+            fade.animation.play('black');
             fade.fadeOut();
-            new FlxTimer().start(2.5, function(_:FlxTimer) {
+            new FlxTimer().start(2, function(_:FlxTimer) {
                 FlxG.switchState(new PlayState(1));
             }, 1);
         }
