@@ -24,7 +24,8 @@ class Bullet extends FlxSprite
         hitSfx = FlxG.sound.load('assets/sounds/hit.mp3');
         hitSfx.volume = 0.33;
         new FlxTimer().start(10, function(_:FlxTimer) {
-           destroy(); 
+            hitSfx.volume = 0;
+            destroy(); 
         }, 1);
     }
 
