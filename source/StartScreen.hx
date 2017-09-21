@@ -36,7 +36,7 @@ class StartScreen extends FlxState
         add(title);
         FlxG.sound.playMusic('assets/music/titleloop.ogg', 0, true);
         FlxG.sound.music.fadeIn();
-        startSfx = FlxG.sound.load('assets/sounds/start.wav');
+        startSfx = FlxG.sound.load('assets/sounds/start.ogg');
         isFadingOut = false;
         add(fade);
 		super.create();

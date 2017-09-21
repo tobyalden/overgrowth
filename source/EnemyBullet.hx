@@ -23,7 +23,7 @@ class EnemyBullet extends FlxSprite
         this.player = player;
         makeGraphic(4, 4, FlxColor.WHITE);
         all.add(this);
-        hitSfx = FlxG.sound.load('assets/sounds/hit.wav');
+        hitSfx = FlxG.sound.load('assets/sounds/hit.ogg');
         hitSfx.volume = 0.33;
     }
 

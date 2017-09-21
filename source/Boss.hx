@@ -39,9 +39,9 @@ class Boss extends Enemy
         offset.y = 16;
         shootTimer = new FlxTimer();
         shootTimer.start(0.8, shoot, 0);
-        shootSfx = FlxG.sound.load('assets/sounds/enemyshoot.wav');
+        shootSfx = FlxG.sound.load('assets/sounds/enemyshoot.ogg');
         shootSfx.volume = 0.24;
-        humSfx = FlxG.sound.load('assets/sounds/bossone.wav');
+        humSfx = FlxG.sound.load('assets/sounds/bossone.ogg');
         humSfx.looped = true;
         humSfx.play();
     }

@@ -72,8 +72,8 @@ class Enemy extends FlxSprite
         health = STARTING_HEALTH;
         reelTimer = new FlxTimer();
         reelTimer.loops = 1;
-        hurtSfx = FlxG.sound.load('assets/sounds/enemyhit.wav');
-        deathSfx = FlxG.sound.load('assets/sounds/enemydeath.wav');
+        hurtSfx = FlxG.sound.load('assets/sounds/enemyhit.ogg');
+        deathSfx = FlxG.sound.load('assets/sounds/enemydeath.ogg');
     }
 
     override public function update(elapsed:Float)

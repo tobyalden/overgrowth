@@ -11,7 +11,7 @@ class Key extends FlxSprite
     public function new(x:Int, y:Int) {
         super(x, y);
         loadGraphic('assets/images/key.png');
-        unlockSfx = FlxG.sound.load('assets/sounds/open.wav');
+        unlockSfx = FlxG.sound.load('assets/sounds/open.ogg');
     }
 
     override public function destroy()
