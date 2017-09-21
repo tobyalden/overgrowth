@@ -126,7 +126,7 @@ class PlayState extends FlxState
 
         FlxG.sound.music.fadeOut();
         if(depth < 10) {
-            FlxG.sound.playMusic('assets/music/' + depth + '.ogg', 0, true);
+            FlxG.sound.playMusic('assets/music/' + depth + '.mp3', 0, true);
             FlxG.sound.music.fadeIn();
         }
 		super.create();

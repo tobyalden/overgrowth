@@ -30,7 +30,7 @@ class Seeker extends Enemy
         health = STARTING_HEALTH;
         shootTimer = new FlxTimer();
         shootTimer.start(1, shoot, 0);
-        shootSfx = FlxG.sound.load('assets/sounds/enemyshoot.ogg');
+        shootSfx = FlxG.sound.load('assets/sounds/enemyshoot.mp3');
         shootSfx.volume = 0.24;
     }
 

@@ -30,7 +30,7 @@ class Fleer extends Enemy
         health = STARTING_HEALTH;
         shootTimer = new FlxTimer();
         shootTimer.start(0.6, shoot, 0);
-        shootSfx = FlxG.sound.load('assets/sounds/enemyshoot.ogg');
+        shootSfx = FlxG.sound.load('assets/sounds/enemyshoot.mp3');
         shootSfx.volume = 0.24;
     }
 

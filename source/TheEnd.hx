@@ -25,8 +25,8 @@ class TheEnd extends FlxState
         title.animation.add('shock', [1]);
         title.animation.play('idle');
         add(title);
-        shockSfx = FlxG.sound.load('assets/sounds/shock.ogg');
-        startSfx = FlxG.sound.load('assets/sounds/endstart.ogg');
+        shockSfx = FlxG.sound.load('assets/sounds/shock.mp3');
+        startSfx = FlxG.sound.load('assets/sounds/endstart.mp3');
         new FlxTimer().start(5, shock, 1);
         startSfx.play();
 		super.create();
