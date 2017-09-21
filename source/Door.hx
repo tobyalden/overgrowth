@@ -14,6 +14,6 @@ class Door extends FlxSprite
         animation.add('closed', [0]);
         animation.add('open', [1]);
         animation.play('closed');
-        leaveSfx = FlxG.sound.load('assets/sounds/leave.mp3');
+        leaveSfx = FlxG.sound.load('assets/sounds/leave.ogg');
     }
 }

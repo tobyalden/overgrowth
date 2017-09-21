@@ -35,7 +35,7 @@ class BossTwo extends Enemy
         height = 32;
         offset.x = 16;
         offset.y = 16;
-        humSfx = FlxG.sound.load('assets/sounds/bosstwo.mp3');
+        humSfx = FlxG.sound.load('assets/sounds/bosstwo.ogg');
         humSfx.looped = true;
         humSfx.play();
     }

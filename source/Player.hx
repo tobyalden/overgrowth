@@ -66,11 +66,11 @@ class Player extends FlxSprite
         isOnGround = false;
         isLookingUp = false;
         isLookingDown = false;
-        runSfx = FlxG.sound.load('assets/sounds/runloop.mp3');
-        shootSfx = FlxG.sound.load('assets/sounds/shoot.mp3');
-        deathSfx = FlxG.sound.load('assets/sounds/death.mp3');
-        jumpSfx = FlxG.sound.load('assets/sounds/jump.mp3');
-        landSfx = FlxG.sound.load('assets/sounds/land.mp3');
+        runSfx = FlxG.sound.load('assets/sounds/runloop.ogg');
+        shootSfx = FlxG.sound.load('assets/sounds/shoot.ogg');
+        deathSfx = FlxG.sound.load('assets/sounds/death.ogg');
+        jumpSfx = FlxG.sound.load('assets/sounds/jump.ogg');
+        landSfx = FlxG.sound.load('assets/sounds/land.ogg');
         jumpSfx.volume = 0.5;
         landSfx.volume = 0.55;
         runSfx.looped = true;

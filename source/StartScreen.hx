@@ -34,9 +34,9 @@ class StartScreen extends FlxState
         title.animation.add('idle', [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1], 10);
         title.animation.play('idle');
         add(title);
-        FlxG.sound.playMusic('assets/music/titleloop.mp3', 0, true);
+        FlxG.sound.playMusic('assets/music/titleloop.ogg', 0, true);
         FlxG.sound.music.fadeIn();
-        startSfx = FlxG.sound.load('assets/sounds/start.mp3');
+        startSfx = FlxG.sound.load('assets/sounds/start.ogg');
         isFadingOut = false;
         add(fade);
 		super.create();
