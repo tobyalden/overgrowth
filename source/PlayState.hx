@@ -45,6 +45,7 @@ class PlayState extends FlxState
 
 	override public function create():Void
 	{
+        FlxG.mouse.visible = false;
         tilesetPath = 'assets/images/tiles.png';
         if(depth > 6) {
             tilesetPath = 'assets/images/tiles3.png';

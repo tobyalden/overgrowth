@@ -23,6 +23,7 @@ class StartScreen extends FlxState
 
 	override public function create():Void
 	{
+        FlxG.mouse.visible = false;
         var title = new FlxSprite(0, 0);
         fade = new Fade();
         fade.alpha = 1;

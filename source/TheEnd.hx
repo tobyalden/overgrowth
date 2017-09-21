@@ -19,6 +19,7 @@ class TheEnd extends FlxState
 
 	override public function create():Void
 	{
+        FlxG.mouse.visible = false;
         title = new FlxSprite(0, 0);
         title.loadGraphic('assets/images/end.png', true, 256, 240);
         title.animation.add('idle', [0]);
