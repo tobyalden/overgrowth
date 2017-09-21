@@ -573,10 +573,10 @@ class PlayState extends FlxState
     private function enlightenPlayer() {
         new FlxTimer().start(2,
             function fadeToStart(_:FlxTimer) {
-                fade.animation.play('white');
+                fade.animation.play('red');
                 fade.fadeOut();
                 new FlxTimer().start(1.5, function(_:FlxTimer) {
-                    FlxG.switchState(new StartScreen(FlxColor.WHITE));
+                    FlxG.switchState(new TheEnd(FlxColor.RED));
                 }, 1);
             }
         , 1);

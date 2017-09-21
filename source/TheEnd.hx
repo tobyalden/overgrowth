@@ -7,8 +7,8 @@ import flixel.util.*;
 class TheEnd extends FlxState
 {
     private static var shockSfx:FlxSound;
+    private static var startSfx:FlxSound;
 
-    //private var isFadingOut:Bool;
     private var fadeInColor:FlxColor;
     private var title:FlxSprite;
 
@@ -25,12 +25,10 @@ class TheEnd extends FlxState
         title.animation.add('shock', [1]);
         title.animation.play('idle');
         add(title);
-        FlxG.camera.fade(fadeInColor, 1, true);
-        //FlxG.sound.playMusic('assets/music/titleloop.ogg', 0, true);
-        //FlxG.sound.music.fadeIn();
         shockSfx = FlxG.sound.load('assets/sounds/shock.wav');
-        //isFadingOut = false;
+        startSfx = FlxG.sound.load('assets/sounds/endstart.wav');
         new FlxTimer().start(5, shock, 1);
+        startSfx.play();
 		super.create();
 	}
 
@@ -39,10 +37,9 @@ class TheEnd extends FlxState
         shockSfx.play();
         new FlxTimer().start(10,
             function fadeToStart(_:FlxTimer) {
-                FlxG.camera.fade(FlxColor.WHITE, 10, false, function()
-                {
+                new FlxTimer().start(10, function(_:FlxTimer) {
                     FlxG.switchState(new StartScreen(FlxColor.WHITE));
-                }, true);
+                }, 1);
             }
         , 1);
     }
